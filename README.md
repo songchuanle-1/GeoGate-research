@@ -1,4 +1,10 @@
-# GeoGate
+# GeoGate research workspace
+
+This private working copy contains the code and the two manuscript formats.
+Start with the [new-device guide (中文)](docs/workstation/START_HERE.md).
+Read the [ICML manuscript](papers/icml2027/01_submission/GeoGate_ICML2027.pdf),
+or the archived CVPR [main paper](papers/cvpr2027/main.pdf) and
+[supplement](papers/cvpr2027/supplement.pdf).
 
 **Training-free late spatial-token pruning for 3D large multimodal models.**
 
@@ -13,8 +19,9 @@ This initial release contains the current method implementation, LLaVA-3D
 experiment entry points, analysis utilities, and synthetic tests. It is a source
 release, not a complete archive of the historical experiments. See
 [reproduction status](docs/reproduction.md) for dependencies and unavailable
-execution assets. No model weights, datasets, raw predictions, or manuscript
-sources are distributed here.
+execution assets. Manuscripts and additional paper-indexed research scripts
+are included in this private copy. Model weights, licensed datasets, and raw
+predictions must be obtained separately.
 
 ## Quick start: core checks
 
@@ -22,8 +29,8 @@ Use Python 3.10 in a separate environment. These dependencies are for the
 synthetic CPU checks; a real 3D backbone also needs its own environment.
 
 ```bash
-git clone https://github.com/songchuanle-1/GeoGate.git
-cd GeoGate
+git clone https://github.com/songchuanle-1/GeoGate-research.git
+cd GeoGate-research
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip

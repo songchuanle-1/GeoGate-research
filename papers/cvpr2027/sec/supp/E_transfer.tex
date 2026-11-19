@@ -1,0 +1,108 @@
+\section{Task transfer and external evaluation}
+\label{sec:supp_transfer}
+We evaluate retention quality beyond the ScanQA development comparisons through task transfer, SQA3D validation, and external 3RScan evaluation. These analyses use distinct protocols and decision rules. Attention-pattern persistence is assessed separately from quality outcomes.
+
+
+\subsection{Five-benchmark quality and multiplicity}
+\label{sec:supp_multiplicity}
+
+We assess multiplicity across the five 3D-LLaVA primary endpoints: ScanQA EM, SQA3D EM, Scan2Cap CIDEr@0.25, ScanRefer mIoU, and Multi3DRefer mIoU. This post-hoc analysis uses recorded predictions and 10,000 paired scene-cluster bootstrap resamples per endpoint. Holm step-down correction controls the stated family at $\alpha=0.05$. The official Scan2Cap evaluator contains 2,068 corpus entries: 2,007 have Mask3D predictions, and 61 receive empty hypotheses under the official protocol.
+
+Intervals are marginal percentile intervals rather than simultaneous five-endpoint intervals. Raw two-sided $p$-values use a centered-bootstrap null, defined as the resampled effect minus the observed effect. We count absolute null effects at least as large as the observed effect, with add-one smoothing $(b+1)/(10000+1)$, then apply Holm correction to the five $p$-values.
+
+\begin{table}[t]
+\centering
+\caption{Family-wise sensitivity across the five 3D-LLaVA primary endpoints. Deltas are GeoGate minus baseline: EM in percentage points, mIoU in 0--100-scale points, and CIDEr in score points. Intervals are marginal paired scene-cluster percentile 95\% intervals; Holm $p$-values address the five-endpoint family.}
+\label{tab:supp_multiplicity}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Endpoint & Delta & 95\% CI & Raw $p$ & Holm $p$ \\
+\midrule
+ScanQA EM & $-0.043$ & $[-0.554,0.503]$ & 0.885 & 1.000 \\
+SQA3D EM & $+0.085$ & $[-0.392,0.561]$ & 0.750 & 1.000 \\
+Scan2Cap CIDEr@0.25 & $-2.854$ & $[-4.653,-1.081]$ & 0.0011 & 0.0055 \\
+ScanRefer mIoU & $-0.143$ & $[-0.289,-0.002]$ & 0.0506 & 0.152 \\
+Multi3DRefer mIoU & $-0.318$ & $[-0.504,-0.132]$ & 0.0011 & 0.0055 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The main-text Scan2Cap interval $[-4.68,-1.11]$ is retained from the original per-endpoint analysis reported with seed 20260904. The frozen five-endpoint analysis instead uses Scan2Cap endpoint seed 20260922 and reports $[-4.653,-1.081]$ in \Cref{tab:supp_multiplicity}. These are separate analysis outputs, not alternative rounding of one interval. We retain both with their analysis identities; the available records do not establish that seed alone explains the difference.
+
+The Scan2Cap and Multi3DRefer losses remain resolved after correction (Holm $p=0.0055$ each). ScanRefer's raw bootstrap $p=0.0506$ becomes Holm-adjusted $p=0.1518$, which does not reject the zero-effect null. Neither ScanQA nor SQA3D rejects that null. Percentile intervals are not inversions of the centered-null tests. Thus, ScanRefer's slightly negative interval and raw $p=0.0506$ retain their distinct interpretations without changing the frozen Holm decision. This endpoint correction does not adjust for selecting L14/R=0.10.
+
+The multiplicity decisions persist across the tested bootstrap seeds. We repeat the paired scene-cluster bootstrap with four additional deterministic base seeds. Predictions, scene clusters, endpoint definitions, and the Holm family remain fixed; seed 20260918 remains the primary result. Across all five base seeds, Scan2Cap and Multi3DRefer reject the null in 5/5 runs. ScanQA, SQA3D, and ScanRefer do not reject it in 5/5 runs. Holm $p$ ranges are $[0.0055,0.0100]$ for Scan2Cap, $[0.0040,0.0055]$ for Multi3DRefer, $[0.1518,0.1779]$ for ScanRefer, and exactly 1.0000 for ScanQA and SQA3D. The unchanged decisions support numerical stability across these seeds, while leaving configuration selection and external validity unaddressed.
+
+\paragraph{Precision of the paired intervals.} The QA intervals still permit small losses despite non-rejection of the zero-effect null. Under a normal approximation, we convert each frozen paired scene-cluster interval into an approximate two-sided 80\%-power minimum detectable effect (MDE). The MDEs are 0.779 EM for ScanQA, 0.682 EM for SQA3D, 0.208 mIoU for ScanRefer, 0.266 mIoU for Multi3DRefer, and 2.572 CIDEr for Scan2Cap. In particular, QA non-rejections do not establish equivalence. This post-hoc interpretation describes observed precision rather than a formal power calculation or equivalence test. The scene-clustering, selection, and split-reuse limitations above still apply.
+
+\subsection{SQA3D validation and quality boundaries}
+\label{sec:supp_sqa_validation}
+The fixed 3D-LLaVA-7B-LoRA L14/R=0.10 configuration was evaluated on all 3,261 official SQA3D validation questions. Fold A contains 1,749 questions from 35 scenes disjoint from development. Fold B contains the remaining 1,512 questions from 30 scenes overlapping ScanQA development. The question partition is answer-blind, but fold B was designed after observing fold A's negative direction. Its subset and non-inferiority rule were then specified before its own outputs. The folds therefore do not constitute a jointly prespecified independent confirmation.
+
+Neither fold overlaps SQA3D train or test scenes. Historical local prediction checks find no exact question-ID matches, but cannot exclude exposure through every checkpoint training source. Both conditions use identical point clouds, the single-word-or-phrase prompt, greedy decoding, seed 0, and a 64-token generation limit.
+
+Before its own generation, each fold's operational non-inferiority margin was fixed at $-1.0$ EM point. Passing requires a one-sided 97.5\% lower scene-bootstrap bound strictly above that margin. \Cref{tab:sqa_validation} reports both completed folds. Intervals use 10,000 scene resamples with seed 20260920. Their two-sided 95\% lower endpoints implement the one-sided decision rule.
+
+\begin{table}[t]
+\centering
+\caption{SQA3D validation EM changes on 3D-LLaVA. All values are percentage points relative to the paired unpruned baseline.}
+\label{tab:sqa_validation}
+\small
+\begin{tabular}{lrr}
+\toprule
+Evaluation & $\Delta$ EM & Scene 95\% CI \\
+\midrule
+Fold A, 35 scenes & $-0.7433$ & $[-1.6609,+0.1170]$ \\
+Fold B, 30 scenes & $-1.1905$ & $[-2.0355,-0.4013]$ \\
+Combined, 65 scenes & $-0.9506$ & $[-1.5610,-0.3511]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Neither fold passes the frozen non-inferiority rule. Fold B shows a resolved loss, and the combined interval also excludes zero. The combined estimate summarizes performance across both folds, but fold B's development overlap prevents treating it as independent-domain confirmation. It cannot retroactively change fold A's decision. Both completed failures therefore remain part of the quality boundary.
+
+Post-hoc runs evaluated R=0.05 and R=0.20 on the same folds after these outcomes had been inspected. Combined EM changes are $-0.5826$ $[-1.2584,+0.0628]$ and $-0.4293$ $[-0.8685,+0.0000]$, respectively. Only combined R=0.20 clears the existing $-1.0$ margin. At R=0.20, fold A changes by $-0.0572$ $[-0.6282,+0.5275]$, whereas fold B changes by $-0.8598$ $[-1.5426,-0.2712]$ and still fails the same rule. These post-hoc budget sensitivities provide neither independent confirmation nor a validated safe budget. Combined R=0.20 does not erase the original R=0.10 failures or the exposure from configuration selection.
+
+\subsection{MMScan evaluation on external 3RScan scenes}
+\label{sec:supp_mmscan}
+\paragraph{Subset and paired protocol.} We evaluate LLaVA-3D-7B on an external subset constructed through label-free overlap checks against the released instruction mixture. Neither of two official MMScan~\cite{lyu2024mmscan} validation-annotation subsets has normalized-question overlap with the released 860K mixture. However, 224 of 803 videos in the larger subset occur there under other tasks: SQA3D, SR3D, Multi3DRefer, Scan2Cap, ScanRefer, NR3D, and ScanQA. Grouping region/view variants by physical scene leaves 246 of 359 base scenes, containing 10,003 questions, with no released-mixture overlap. We freeze the 3RScan portion: 4,934 questions across 234 scenes. A separate exact-match check against the full released mixture finds zero scene-ID, normalized-question, or scene-question pair matches.
+
+The downloaded RGB-D assets pass CRC checks, and all 234 videos pass deterministic preprocessing and input validation. Paired inference runs on one H100 with \texttt{num\_chunks=1}; hardware parallelism is not part of this quality endpoint. Inputs follow the checkpoint's actual 20-frame contract. Baseline and fixed L14/R=0.10 each produce all 4,934 rows and pass structural and scoring-parity checks. Paired scene bootstrap uses 10,000 draws.
+
+\paragraph{Quality result and decision.} The external evaluation does not establish quality superiority. Baseline EM is 11.0053\% and GeoGate EM is 10.9445\%, giving a paired change of $-0.0608$ points with a two-sided 95\% scene-clustered interval $[-0.2980,0.1773]$. CIDEr changes by $-0.2224$ score points $[-1.6586,1.2359]$. The prespecified superiority criterion requires both the EM change and its one-sided 97.5\% lower bound to exceed zero; neither condition is met. The displayed two-sided 95\% interval supplies this lower bound (\cref{sec:supp_statistics}). The EM interval includes zero and does not establish degradation. Non-inferiority was not tested because no loss margin was prespecified; none was introduced retrospectively. The downloaded checkpoint's complete historical training manifest also remains unverified.
+
+\paragraph{Planning assumptions and realized precision.} Before MMScan outputs, a planning calculation scaled inspected ScanQA scene-clustered paired EM variance from 71 to 234 independent scenes. The recorded approximate 80\%-power MDEs are 0.41 and 0.45 EM points. The former uses the standard two-sided 95\% normal cutoff of 1.9600. The latter uses the conservative cutoff 2.2414, rather than the standard one-sided 97.5\% normal quantile. These approximations use no MMScan predictions and do not define the bootstrap decision threshold.
+
+The completed run has scene-bootstrap standard error $0.1213$ EM points. Using the standard normal critical value for a one-sided 97.5\% criterion gives a post-hoc 80\%-power MDE of $0.3397$ EM points. The absolute observed effect is below the prospective 0.45-EM-point and post-hoc MDEs, but that comparison is not a decision rule. This precision summary does not change the superiority criterion or supply an equivalence test.
+
+\paragraph{External attention profiles.} A separately prespecified attention-profile check tests pattern persistence on the same 234 videos. It uses one official question per video in subset order, with the same prompt construction, target clicks, 20-frame contract, and seed. Each video receives one prefill forward pass, without a pruning hook or answer generation. All three scene-clustered criteria are positive: late-minus-middle spatial attention is $+1.5090$ percentage points (95\% scene interval $[1.0888,1.9632]$), the L14--L13 jump is $+7.3029$ points $[6.7963,7.8202]$, and middle-minus-late half-mass coverage is $+3.3986$ points $[2.9841,3.8294]$. The L14--L13 direction is positive for 234/234 videos. These results support external-domain persistence of the attention pattern. They do not test quality preservation, individual-token causality, or the pruning schedule, whose separate quality gate remains inconclusive.
+
+\subsection{Post-hoc profile-to-quality association}
+\label{sec:supp_coupling}
+Post-hoc association analysis asks whether stronger attention patterns predict quality changes. Profiles and predictions were already inspected before this analysis was specified. For each of 234 3RScan scenes, we compute mean paired L14/R=0.10 EM change and five summaries. These are late-minus-middle attention, L14--L13 attention jump, middle-minus-late half-mass coverage, late half-mass token count, and late received-attention Gini. Pearson and Spearman associations use 10,000 scene-bootstrap resamples and 10,000 label permutations, with Holm adjustment across five endpoints. The primary late-minus-middle endpoint gives Pearson $+0.0790$ $[-0.0730,+0.2729]$ and Spearman $-0.0138$ $[-0.1252,+0.1009]$. It fails the stated same-sign, interval-excluding-zero rule. The raw L14--L13 Spearman estimate is $-0.1337$ $[-0.2596,-0.0044]$, but its Holm-adjusted permutation $p=0.4220$ does not support a relationship after correction. Neither association measure meets its stated decision rule, yielding \emph{no supported monotonic coupling}. This post-hoc diagnostic neither resolves the external quality test nor establishes whether the profile predicts quality under other conditions. Failure to detect a relationship does not establish its absence.
+
+\subsection{Multi3DRefer budget sensitivity}
+Increasing the budget reduces the observed Multi3DRefer loss without establishing preservation. We compare frozen 3D-LLaVA predictions at R=10\% and R=20\% with identical prompts, ground-truth object sets, and model identifiers for all 11,120 queries across 141 scenes. \Cref{tab:supp_multi3drefer_budget} reports paired scene-cluster bootstrap 95\% intervals using 10,000 draws.
+
+\begin{table}[t]
+\centering
+\caption{Multi3DRefer budget sensitivity. Deltas are candidate minus reference in mIoU points on the inspected benchmark.}
+\label{tab:supp_multi3drefer_budget}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Comparison & Group & Delta & 95\% CI \\
+\midrule
+R=10\% $-$ baseline & all & $-0.318$ & $[-0.501,-0.134]$ \\
+R=20\% $-$ baseline & all & $-0.104$ & $[-0.228,0.018]$ \\
+R=20\% $-$ R=10\% & all & $+0.214$ & $[0.092,0.343]$ \\
+\midrule
+R=20\% $-$ baseline & zero target & $0.000$ & $[-0.333,0.326]$ \\
+R=20\% $-$ baseline & one target & $-0.210$ & $[-0.386,-0.039]$ \\
+R=20\% $-$ baseline & multiple targets & $+0.149$ & $[-0.002,0.298]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The R=20\% point estimate is closer to baseline than R=10\%, with a positive paired R20-minus-R10 difference. The R20-minus-baseline interval includes zero while permitting a loss. By itself, it establishes neither losslessness nor non-inferiority and does not justify recommending a Multi3DRefer budget. Stratified intervals are exploratory and unadjusted for multiplicity. The single-target group has the larger net loss, providing no support for attributing degradation to multi-target queries. We omit an R=30\% sweep because the frozen decision rule required only R=20\% to distinguish a recoverable point estimate from a remaining task boundary.

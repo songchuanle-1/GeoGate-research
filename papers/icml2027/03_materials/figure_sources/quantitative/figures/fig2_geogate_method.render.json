@@ -1,0 +1,566 @@
+{
+  "figure": "fig2_geogate_method",
+  "width_in": 6.875,
+  "height_in": 3.85,
+  "font": "Times New Roman",
+  "text": [
+    {
+      "text": "(a)  Late pruning schedule",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.035,
+        0.9358311688311689,
+        0.24736363636363637,
+        0.9670000000000001
+      ]
+    },
+    {
+      "text": "32 decoder blocks | zero-indexed",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7759090909090909,
+        0.9374009824810605,
+        0.965,
+        0.962
+      ]
+    },
+    {
+      "text": "Absorption",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.050397727272727275,
+        0.8951607058306277,
+        0.11585227272727272,
+        0.919759723349567
+      ]
+    },
+    {
+      "text": "Interaction",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.24945454545454548,
+        0.8951607058306277,
+        0.31054545454545457,
+        0.919759723349567
+      ]
+    },
+    {
+      "text": "Readout",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.6075625,
+        0.8951607058306277,
+        0.6555625,
+        0.919759723349567
+      ]
+    },
+    {
+      "text": "Tail",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.8735852272727272,
+        0.8951607058306277,
+        0.8957897727272728,
+        0.919759723349567
+      ]
+    },
+    {
+      "text": "L0",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.0598625,
+        0.7954009824810605,
+        0.0758625,
+        0.82
+      ]
+    },
+    {
+      "text": "L2",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.1161125,
+        0.7954009824810605,
+        0.1321125,
+        0.82
+      ]
+    },
+    {
+      "text": "L8",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.2848625,
+        0.7954009824810605,
+        0.30086250000000003,
+        0.82
+      ]
+    },
+    {
+      "text": "L14",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.44997613636363637,
+        0.7954009824810605,
+        0.47324886363636365,
+        0.82
+      ]
+    },
+    {
+      "text": "L20",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.6187261363636364,
+        0.7954009824810605,
+        0.6419988636363636,
+        0.82
+      ]
+    },
+    {
+      "text": "L26",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7874761363636364,
+        0.7954009824810605,
+        0.8107488636363638,
+        0.82
+      ]
+    },
+    {
+      "text": "L31",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.9281011363636364,
+        0.7954009824810605,
+        0.9513738636363638,
+        0.82
+      ]
+    },
+    {
+      "text": "Full sequence through L14",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.055,
+        0.7617714195526696,
+        0.24088636363636365,
+        0.7887792207792208
+      ]
+    },
+    {
+      "text": "Prune before L15",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.535,
+        0.7617714195526696,
+        0.6583409090909091,
+        0.7887792207792208
+      ]
+    },
+    {
+      "text": "(b)  One full-length forward, then attention-guided selection",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.035,
+        0.6796688311688313,
+        0.5164545454545455,
+        0.7110000000000001
+      ]
+    },
+    {
+      "text": "Input tokens",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.07636363636363637,
+        0.6487714195526696,
+        0.16363636363636364,
+        0.6757792207792208
+      ]
+    },
+    {
+      "text": "Full-length prefill",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.25432954545454545,
+        0.6487714195526696,
+        0.37767045454545456,
+        0.6757792207792208
+      ]
+    },
+    {
+      "text": "Score once",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.44432954545454545,
+        0.6487714195526696,
+        0.5196704545454546,
+        0.6757792207792208
+      ]
+    },
+    {
+      "text": "Select",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.6786363636363636,
+        0.6487714195526696,
+        0.7193636363636363,
+        0.6757792207792208
+      ]
+    },
+    {
+      "text": "Continue",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.881,
+        0.6487714195526696,
+        0.945,
+        0.6757792207792208
+      ]
+    },
+    {
+      "text": "text",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.128,
+        0.5167004912405303,
+        0.14981818181818182,
+        0.5412995087594697
+      ]
+    },
+    {
+      "text": "20 spatial / all text",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.06472727272727273,
+        0.4634009824810606,
+        0.17527272727272727,
+        0.488
+      ]
+    },
+    {
+      "text": "Decoder",
+      "font_pt": 8.0,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.28813636363636363,
+        0.5734960993867243,
+        0.34486363636363637,
+        0.6005039006132755
+      ]
+    },
+    {
+      "text": "L0-13",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.2954090909090909,
+        0.5334960993867245,
+        0.3375909090909091,
+        0.5605039006132757
+      ]
+    },
+    {
+      "text": "L14",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.4652727272727273,
+        0.5708081118100649,
+        0.49872727272727274,
+        0.6011918881899351
+      ]
+    },
+    {
+      "text": "Full length",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.44927272727272727,
+        0.5337004912405303,
+        0.5147272727272727,
+        0.5582995087594698
+      ]
+    },
+    {
+      "text": "Enable eager before L14",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.4121818181818182,
+        0.46240098248106065,
+        0.5518181818181818,
+        0.487
+      ]
+    },
+    {
+      "text": "Top-K",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.675465909090909,
+        0.5584960993867243,
+        0.7205340909090908,
+        0.5855039006132755
+      ]
+    },
+    {
+      "text": "L14 output",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5582727272727273,
+        0.6001607058306276,
+        0.6237272727272727,
+        0.6247597233495671
+      ]
+    },
+    {
+      "text": "10% spatial",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7808181818181819,
+        0.4724009824810606,
+        0.8491818181818181,
+        0.497
+      ]
+    },
+    {
+      "text": "+ all text",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7880909090909091,
+        0.4394009824810607,
+        0.8419090909090909,
+        0.464
+      ]
+    },
+    {
+      "text": "Decoder",
+      "font_pt": 8.0,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.8921363636363636,
+        0.5734960993867243,
+        0.9488636363636364,
+        0.6005039006132755
+      ]
+    },
+    {
+      "text": "L15-31",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.8950454545454546,
+        0.5324960993867244,
+        0.9459545454545455,
+        0.5595039006132756
+      ]
+    },
+    {
+      "text": "Attention",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.3577272727272727,
+        0.3647004912405303,
+        0.413,
+        0.3892995087594697
+      ]
+    },
+    {
+      "text": "Last prompt",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.3417272727272727,
+        0.33070049124053036,
+        0.413,
+        0.35529950875946975
+      ]
+    },
+    {
+      "text": "Spatial keys only",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.558,
+        0.39870049124053025,
+        0.6598181818181819,
+        0.4232995087594697
+      ]
+    },
+    {
+      "text": "Head mean (FastV)",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.558,
+        0.3647004912405303,
+        0.67,
+        0.3892995087594697
+      ]
+    },
+    {
+      "text": "Same forward; no replay",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.558,
+        0.33070049124053036,
+        0.7005454545454546,
+        0.35529950875946975
+      ]
+    },
+    {
+      "text": "Token cells and attention entries are schematic; original token order is retained.",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.25240098248106063,
+        0.4964772727272727,
+        0.277
+      ]
+    },
+    {
+      "text": "(c)  Generation bookkeeping",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.035,
+        0.18383116883116885,
+        0.26627272727272727,
+        0.21500000000000002
+      ]
+    },
+    {
+      "text": "Original position IDs",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.10204545454545456,
+        0.11241493055555556,
+        0.24895454545454546,
+        0.13958506944444443
+      ]
+    },
+    {
+      "text": "Preserve RoPE positions",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.1027727272727273,
+        0.0757004912405303,
+        0.24822727272727274,
+        0.10029950875946969
+      ]
+    },
+    {
+      "text": "KV cache synchronization",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.4134318181818183,
+        0.11249609938672439,
+        0.5975681818181819,
+        0.1395039006132756
+      ]
+    },
+    {
+      "text": "Index map + length snapshots",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.4175000000000001,
+        0.0757004912405303,
+        0.5935,
+        0.10029950875946969
+      ]
+    },
+    {
+      "text": "One-token decode",
+      "font_pt": 8.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.7667272727272727,
+        0.11241493055555556,
+        0.8932727272727272,
+        0.13958506944444443
+      ]
+    },
+    {
+      "text": "Mask uses true cache length",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7485454545454545,
+        0.0757004912405303,
+        0.9114545454545454,
+        0.10029950875946969
+      ]
+    }
+  ],
+  "evidence": {
+    "type": "schematic",
+    "full_length_blocks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "first_reduced_block": 15,
+    "spatial_retention": 0.1,
+    "text_retention": 1.0,
+    "scorer": "FastV head-averaged last-prompt attention",
+    "eager_enabled_before_l14_forward": true,
+    "l14_forward_count": 1,
+    "scorer_replay": false,
+    "illustrative_spatial_cells": 20,
+    "illustrative_selected_cells": [
+      3,
+      15
+    ],
+    "measured_coordinates": false,
+    "reuse": "execution-sequence redraw"
+  },
+  "new_statistics": false,
+  "excluded_observations": 0,
+  "outputs": {
+    "pdf": "5384bbe4f1182b31c0e0299cf390635a8655428aae1291c53041889f67275bb1",
+    "svg": "1383f2134cc1de4e37c9eba6b9f3125b41a662b573382fd5c6d36eabbe97d10f",
+    "png": "4abf0d2bc94e3683e7b16940012ba00c5983660d96a7e5ee425953e127bea840"
+  }
+}

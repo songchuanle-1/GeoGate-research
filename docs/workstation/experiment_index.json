@@ -1,0 +1,127 @@
+{
+  "indexed_entry_points": {
+    "Attention profiles": [
+      "analysis/e1_attention_profile.py",
+      "analysis/e1b_attention_profile_3dllava.py"
+    ],
+    "Schedule/scorer QA": [
+      "adaptive_token/run_scanqa_geogate.py",
+      "analysis/paired_cider_bootstrap.py",
+      "analysis/audit_schedule_controls_paired.py"
+    ],
+    "Matched-input K128 quality": [
+      "adaptive_token/run_shared_input_quality_v3.py"
+    ],
+    "Analytical cost-matched QA": [
+      "adaptive_token/run_stage_v4.py"
+    ],
+    "Paired layer replay": [
+      "adaptive_token/run_layer_sweep_paired.py",
+      "analysis/audit_layer_sweep_paired.py"
+    ],
+    "First-token intervention": [
+      "analysis/run_readout_logit_v13.py",
+      "analysis/finalize_readout_logit_v13.py"
+    ],
+    "Complete-answer intervention": [
+      "analysis/run_readout_generation_v15.py",
+      "analysis/finalize_readout_generation_v15.py"
+    ],
+    "Fixed-set depth control": [
+      "analysis/run_fixed_deletion_v21.py",
+      "analysis/audit_fixed_deletion_v21.py"
+    ],
+    "B1 timing": [
+      "adaptive_token/run_scanqa_timing_boundaries_v4.py",
+      "analysis/summarize_timing_boundaries_v4.py"
+    ],
+    "B2/B4 same-scene throughput": [
+      "analysis/run_batch_throughput_full_v7.py"
+    ],
+    "Mixed-scene B4 throughput": [
+      "analysis/run_hetero_batch_throughput_v18.py",
+      "analysis/audit_hetero_batch_throughput_v18c.py"
+    ],
+    "Five-benchmark boundaries": [
+      "adaptive_token/run_scanqa_geogate_3dllava.py",
+      "adaptive_token/run_sqa3d_geogate_3dllava.py",
+      "adaptive_token/run_scan2cap_gg.py",
+      "adaptive_token/run_scanrefer_gg.py",
+      "adaptive_token/model_multi3drefer_geogate.py",
+      "analysis/audit_five_benchmark_multiplicity.py"
+    ],
+    "SQA3D validation folds": [
+      "adaptive_token/run_sqa3d_scene_disjoint.py",
+      "analysis/build_sqa3d_scene_disjoint_manifest.py",
+      "analysis/build_sqa3d_validation_replication_manifest.py"
+    ],
+    "MMScan 3RScan quality/profile": [
+      "adaptive_token/run_mmscan_geogate.py",
+      "analysis/e1c_attention_profile_mmscan_3rscan.py",
+      "analysis/audit_mmscan_profile_quality_coupling.py"
+    ],
+    "Answer cases": [
+      "analysis/audit_sqa3d_error_cases.py"
+    ],
+    "Blocked independent OpenEQA endpoint": [
+      "analysis/run_openeqa_hm3d_v14.py",
+      "adaptive_token/openeqa_hm3d_v14.py"
+    ]
+  },
+  "additional_source_sha256": {
+    "adaptive_token/geogate_batch_hetero_v18.py": "1ddbcf1e2976273ac3df56ba3c917fbc97444429cbd20ed2ad4ee4a0a274261f",
+    "adaptive_token/geogate_batch_v6.py": "33029fa25433849ec14ca09075dc29c1b5ff3c09059df7cf0ada303001d5da58",
+    "adaptive_token/model_multi3drefer_geogate.py": "8689492be09bbc3331d9c572fc97e4db95827adf83db335e84ccdb0145e82ad5",
+    "adaptive_token/openeqa_hm3d_v14.py": "efcf534a59d663823c2b086fc15a47357c2e8c463d2fd4cd69f2d85a73ffca52",
+    "adaptive_token/prepared_generation_cache_v15.py": "0288b23164c664de81bf88bb4f8c76419bc8921e61ac71a42d6491a3720b0396",
+    "adaptive_token/run_mmscan_geogate.py": "46a9b740418e98c2c38ba9d67fc1b391c8348072298bbae012938c951f9711a4",
+    "adaptive_token/run_scan2cap_gg.py": "cd1adec520a8ff8791f6b9bfa9e473864e7302f48422ca0821e8753969e0d338",
+    "adaptive_token/run_scanqa_geogate_3dllava.py": "dfa1943130df134e5c0dca4b1ba55482edb3da0475537431a7b7df61c3b9f055",
+    "adaptive_token/run_scanrefer_gg.py": "95155effa185d83f2a7698fc998f86c462229df306dc94f32d840372a9dc6d28",
+    "adaptive_token/run_sqa3d_geogate_3dllava.py": "e06bcdbe630e3ac64a89aa46ff2207cecbddca7d3c7a54e49e2ff77e557d833b",
+    "adaptive_token/run_sqa3d_scene_disjoint.py": "431cf842433ae067b76fdabe9bb2115fce2192b63bb7ee77427ae5bc3de79bb2",
+    "adaptive_token/run_stage_v4.py": "15804c61fc82fdabf0285c1f8d6504820414f33fee6cae08a523fa9355c76d9d",
+    "adaptive_token/stage_generate_v4.py": "b6cff5a5ea8065d30fdda13a9e006e124fbc2f93bbde0cfeaf846723d95814c7",
+    "adaptive_token/stage_pointcloud_v4.py": "a59eb8fcfb751e98fa7c5936e58b98aac792a43fdbdc71e161ec8ee737fdb831",
+    "adaptive_token/stage_prepared_cache_v4.py": "ec4dfe1dd2a261877383b79cf85f3fd6a7baf7812f4b144a545449ddf5c68eec",
+    "adaptive_token/stage_question_v4.py": "ebb0a6b9d8825ed4a6ccb96afe2a6b17ea2a47f6fcc8e8264177b56bf7f62248",
+    "analysis/audit_five_benchmark_multiplicity.py": "6003a5d0a2929dd36d734c291a5b69454bc77e72349f5814d03be3d0228eeaee",
+    "analysis/audit_fixed_deletion_v21.py": "6951d648666cf88cbdbea7268aecb7e2bf964fd691bd2d4eec947ed67dd36432",
+    "analysis/audit_hetero_batch_throughput_v18.py": "0c1d7365a371d577908d21db97016be439fa1879f0e463bec3e9c20a164dc3b5",
+    "analysis/audit_hetero_batch_throughput_v18c.py": "0f322e7237a7cc9d308476ccb105938740efbe3d8ce6a9546b78e596281bc3d2",
+    "analysis/audit_layer_sweep_paired.py": "2f70a5ccda828545ef69a961ed0f7ad9b5f350385b3b3695ef70bb0b8a89d547",
+    "analysis/audit_mmscan_profile_quality_coupling.py": "c12048d010c6ac4d511358b0e738b8117aa4da1d791f6888e880d119d75fae15",
+    "analysis/audit_readout_generation_v15.py": "6aa8a2c28c252483ff9d87586d80b68d1c6f29581346aeaaee40198bd63209b0",
+    "analysis/audit_readout_logit_v13.py": "170f60ec44f1474632c41f6117ec1cf69bd1cc53e6e3959c256eba031476dc81",
+    "analysis/audit_schedule_controls_paired.py": "f8379a3d5a7b1298cf17279b6347c86685242ac062a7bb9d43ee35cfe44a7a47",
+    "analysis/audit_selection_adjusted_inference.py": "547dfe45d1e640094fbbf811af317f08b6a513f93d2e9489c2fd7ebd5009962b",
+    "analysis/audit_sqa3d_error_cases.py": "3e3f10f4003d042d5c44dbac1f6c7654fc9fdd784e96d36e232af3f14a984710",
+    "analysis/batch_throughput_v7_common.py": "162670aa2cd928b248a501579db13e7ae61a301009eede4489d79da5e591d9a3",
+    "analysis/build_sqa3d_scene_disjoint_manifest.py": "ecb291a81fd9b3c47e93de5807860773f5e1b6831bdef248af2fef264d9474ec",
+    "analysis/build_sqa3d_validation_replication_manifest.py": "dd49007d8f40d2674213258a1a99d9ead140f81808088bb067925c8ae486cec0",
+    "analysis/e1b_attention_profile_3dllava.py": "19ce9a58403357f2a1f0bc4dc2938fcbd46d34d70b98309a4d5a91ba3da0d769",
+    "analysis/e1c_attention_profile_mmscan_3rscan.py": "f1fc519ebbba7d7e6b7d6bb7662c36394944c01e44c35ba7004112485761d14c",
+    "analysis/experiment_lock.py": "168cd02b75394ac5107db647019fd71b10ee383ee38617ff2df648628843115d",
+    "analysis/finalize_readout_generation_v15.py": "9b5a8caea565db4ab54f3d623cc8673ec0c6271f2000c38ec4697627067d36b1",
+    "analysis/finalize_readout_logit_v13.py": "a95e51aa3a7a1b25f31ce25fe986fd8e80ac7600b90bb53d52487f59335b5c2d",
+    "analysis/hetero_batch_eos_v18.py": "f08e801e53623a32f998daf9496a726d47c31eaca6dcd44b5d463530a9c14c40",
+    "analysis/hetero_batch_schedule_v18.py": "b89459c86bdd4f08d48d3efe097eea21b622a530091e9b4f6e4e67345407faf9",
+    "analysis/readout_fixed_deletion_protocol.py": "eae512135ac05e2ad50950914711d0e87e5aa7e408a33d1042638d58d7e57353",
+    "analysis/readout_generation_v15_protocol.py": "4a5ff3910289d185a59241e7902a88448eb4c1c21cf572e25a627851bb00bb0f",
+    "analysis/readout_generation_v15_trace.py": "3e5de499e41ffb56ec6bfb7a045e37f2a9b26c5764af68387e73b4d22bcafc6b",
+    "analysis/readout_logit_v13_protocol.py": "c927cbb0b867f36cb7d33f7a1c7d41ae1166909c0aff07786415b95b2f6ec310",
+    "analysis/run_batch_throughput_full_v7.py": "25250ca92ea68961fa045795c57b0e7b72af6dc3c06e6fa98f32425c2e790fc8",
+    "analysis/run_fixed_deletion_v21.py": "c37cb1bb448dfabc9ad3e69883e35cb8745744c877039715bd2b957e49dd24d7",
+    "analysis/run_hetero_batch_throughput_v18.py": "75a0d2037521c3b9817381a32355c0521b1df62731398e8a8a24772398de6f61",
+    "analysis/run_hetero_batch_v18_probe.py": "3140fbec4bf1bdb4b3ac02736c319efd416d7faadf199f6056d3e255b4e72167",
+    "analysis/run_openeqa_hm3d_v14.py": "4abe8202835137ee70b42ea47760569170b895d914afe3924f4c16b8af2c7fd6",
+    "analysis/run_readout_generation_v15.py": "1af6588d11706fcdbeb9fa06dc013e928acc1545b54949bd52a25c8b6a7584a8",
+    "analysis/run_readout_logit_v13.py": "7344b226bcd565ab75d67712745ee97edf1f982392dc3e2607146ece73b6adab",
+    "analysis/score_mmscan_geogate.py": "d153be3fce2ce29608e4b34d434ebef264f09b74970a2a2ea345b645ba8cd915",
+    "analysis/score_readout_generation_v15.py": "5d5621122fff6e62dd86caebcb7b875ef3fba7add22d1ee11357202dd5491f4d",
+    "analysis/score_readout_logit_v13.py": "e5bf98793e6284dec5898c1ee41d906f619894e10077d4a6709f5a128785394e",
+    "analysis/score_sqa3d_scene_disjoint.py": "23670f81e75a5075aa739965f877151167f8f4eac4ec38424dc7a1c15681a08d",
+    "analysis/stage_provenance_v4.py": "fe242323d2b7e6d0d58b6e9e3244a832a4e9274fbdbce079ac161b77220b5fea",
+    "analysis/summarize_timing_boundaries_v4.py": "90fcd170c3c333c665dab9477595997b560356e5fa11fb660a96ad9804ed6fd4"
+  }
+}

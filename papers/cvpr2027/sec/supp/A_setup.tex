@@ -1,0 +1,64 @@
+\section{Experimental setup and inference conventions}
+\label{sec:supp_protocols}
+The two model settings differ in representation as well as token count. LLaVA-3D-7B and 3D-LLaVA-7B-LoRA use approximately 1500 and 100 spatial tokens, respectively; model, representation, and training differences prevent a controlled token-count scaling interpretation.
+
+GeoGate combines late-prefill pruning with all-layer prompt key--value (KV) cache compaction before decoding. L14 denotes a full zero-indexed block L14, followed by pruning before L15. The default relative budget ($R=0.10$) and fixed 128-token comparisons are distinct operating points. Quality and timing characterize the combined prefill/cache intervention.
+
+
+\subsection{Models, inputs, and paired comparisons}
+We report exact match (EM), consensus-based image description evaluation (CIDEr), and mean intersection over union (mIoU).
+\Cref{tab:supp_protocolmap} identifies the principal ScanQA runners and their matching boundaries. Comparisons are paired within a row; estimates from different runners are not pooled. In particular, equal final token counts in the official 3DZip comparison do not imply equal total cost.
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Core LLaVA-3D ScanQA protocol map. These runners use the inspected ScanQA validation split: 4675 questions/71 scenes. Matching applies within a row, not across rows; --- means CIDEr is not reported for replay.}
+\label{tab:supp_protocolmap}
+\begin{tabular}{@{}p{0.17\textwidth}p{0.20\textwidth}p{0.14\textwidth}p{0.15\textwidth}p{0.25\textwidth}@{}}
+\toprule
+Runner & Intervention or budget & Matched within runner & Native EM/CIDEr & What the comparison establishes \\
+\midrule
+Schedule/scorer grid & Relative retention; default L14/$R=0.10$ & Inputs, prompt, decoding & 27.34/93.96 & Quality sensitivity on the development split; not independent preservation. \\
+Analytical cost controls & L14/$K=128$; length-conditioned L2/L8 budgets & Prepared embedding, analytical LM cost & 27.42/94.06 & Selected early/late controls at matched analytical cost, not measured latency. \\
+Official 3DZip comparison & 3DZip/$K=128$ and L14/$K=128$ & RGB-D, prompt, per-query seed & 27.23/93.48 & Quality at equal retained-token count; computation and latency are not matched. \\
+Complete-answer deletion & Layer-specific top, random, bottom sets; fixed-set replay & Prepared embedding, deletion budget, baseline & 27.36/93.95 & Set-level relevance; fixed sets do not support an L14-specific damage maximum. \\
+Shared-input layer replay & Relative retention; $R=0.10$ across 11 pruning layers & Video tensor, expanded embedding, per-query seed & 27.4225/--- & Layer means and simultaneous contrasts; no resolved superiority over native or adjacent late settings. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+LLaVA-3D QA uses the suffix ``Answer the question simply.'' and self-sampled stride-10 frames. The schedule-grid native baseline is 27.34 EM/93.96 CIDEr. A separate beam-5 diagnostic gives 27.40/100.86, demonstrating decoding sensitivity while leaving the difference from published results unresolved. LLaVA-3D SQA3D changes EM from 55.90 to 55.53 (scene 95\% CI $[-0.87,0.14]$). On 3D-LLaVA ScanQA, retaining 50, 25, and 10 of 100 superpoints gives 28.04, 27.94, and 27.83 EM, versus 27.87 native. Each result retains its runner-specific protocol. The 500-question exploratory subset samples one question per scene, then adds questions round-robin across all 71 scenes. This ensures scene coverage without guaranteeing coverage of every semantic scene type.
+
+\subsection{Pruning, cache compaction, and decoding}
+\label{sec:supp_implementation}
+\paragraph{KV index mapping.} Layers through the pruning block cache the full sequence; later layers cache the reduced sequence. GeoGate records the original-position map at each resulting length and slices every layer's cache to the final kept set. The map starts in original sequence order and is updated with kept indices after each drop. Each layer searches its saved map for the final original positions to obtain the key/value slice. We check that mappings are valid, sorted, and unique, and that cache lengths agree before decoding. This synchronization supports the tested interface's common 4D decode mask; other pruning interfaces need not impose this constraint. Early-layer prompt caches are also compacted despite their full-length prefill computation. The reported prompt-KV reduction depends on this all-layer operation, whose quality and timing effects were not isolated from late-prefill pruning.
+
+For a layer with cache length $\ell_i$, let $M_{\ell_i}$ be its saved original-position map and $M_{T_{\text{kept}}}$ the final kept map. The cache-slicing index expression is
+\begin{equation}
+\mathcal{J}_i \;=\; \operatorname{searchsorted}\!\big(M_{\ell_i},\; M_{T_{\text{kept}}}\big),
+\end{equation}
+and is applied to both key and value tensors. Eager attention is configured before the L14 forward; the scorer reads that same forward's attention weights, without an additional L14 pass.
+
+\paragraph{Single-token decode.} After cache pruning, the original attention mask can be longer than the cache. The tested HuggingFace input-preparation path can consequently feed multiple tokens per decode step. GeoGate restricts input to the final token and rebuilds the mask from actual cache length. Full-generation checks verify one-token forwards and monotonic KV growth. Without this correction, mask-minus-cache input preparation can repeatedly re-feed generated tokens, increasing latency. Continued re-feeding can exceed the supported position range for rotary position embeddings (RoPE). The tested generation path implements the correction by wrapping \texttt{prepare\_inputs\_for\_generation}.
+
+\paragraph{RoPE positions.} Retained spatial tokens keep their original position IDs. A 500-question pilot shows that compact re-indexing changes EM from 30.80 to 18.20 and produces truncated answers. This result motivates the position-preservation invariant without identifying a uniquely 3D positional mechanism.
+
+\paragraph{Deterministic scene cap.} Three ScanQA scenes exceed the 2,560-token preparation cap. We reuse a deterministic scene-level CPU permutation across slots, conditions, and processes. Cap summaries and selected-index hashes reproduce across all three tensor-batch sessions. Independent slot-level caps would assign different spatial evidence to duplicated inputs. The shared permutation instead depends on scene identity, seed, and pre-cap count. It controls input construction separately from GeoGate's attention ranking.
+
+\subsection{Statistical estimands and inference scope}
+\label{sec:supp_statistics}
+
+Quality differences are paired within a runner. EM and mIoU use 0--100 scales, while CIDEr differences use score points. Scene bootstrap samples scene labels with replacement, includes all paired questions from each sampled scene, and computes a question-weighted mean. CIDEr resampling holds reference-corpus inverse document frequency (IDF) contributions fixed. Question-level and scene-level intervals target different resampling units and are labeled separately.
+
+Two-sided central 95\% percentile intervals use the 2.5th and 97.5th percentiles. The prespecified two-sided 97.5\% intervention and cost-control intervals instead use the 1.25th and 98.75th percentiles. These are not one-sided 97.5\% lower bounds. The SQA3D and MMScan quality gates use the lower endpoint of a two-sided 95\% interval as the one-sided 97.5\% bound. Simultaneous max-$t$ intervals apply only to their stated comparison family; the five-benchmark Holm analysis retains marginal percentile intervals and adjusts the endpoint $p$-values separately.
+
+ScanQA validation informed configuration selection. Analyses on that split remain conditional on selection unless explicitly stated otherwise, even when individual comparisons were specified before their outputs. Leave-one-scene-out selection and bootstrap-seed checks assess stability within this development setting, not independent confirmation. An interval containing zero does not by itself establish equivalence or non-inferiority; either claim requires a prespecified margin and an appropriate decision rule. These limitations apply throughout the sensitivity analyses; individual sections identify additional confounds.
+
+The original per-endpoint quality report uses 10,000 draws and seed 20260904. Earlier protocol summaries record 20260906 for B1 latency, 20260912 for tensor-batch throughput, and 20260913 for the two LLaVA-3D interventions. Follow-ups retain their indexed run-specific seeds. Random-arm inference conditions on the three frozen rankings, not an unlimited population of random sets.
+
+\subsection{Selection and evaluation chronology}
+\label{sec:supp_selection}
+
+The layer and relative budget were selected using inspected ScanQA validation point estimates. The profile-derived onset window and threshold were also chosen after inspecting the profiles. These early choices precede the later controlled comparisons, but available records do not reconstruct every early search decision or a complete timestamp chain.
+
+The fixed-token-set control followed the own-set deletion results that exposed the identity--depth confound. Its protocol specified the comparison before the fixed-set outputs, but reuse of the split keeps the result conditional on development. \Cref{sec:supp_sqa_validation} details the sequential SQA3D fold design. The MMScan protocol specified its subset and superiority criterion before MMScan outputs. Budget follow-ups, profile-to-quality coupling, and throughput mismatch exclusions are post-hoc analyses. \Cref{sec:supp_repro_index} indexes the protocols and source records.

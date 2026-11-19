@@ -1,0 +1,485 @@
+{
+  "figure": "fig_transfer_effects",
+  "width_in": 6.875,
+  "height_in": 3.2,
+  "font": "Times New Roman",
+  "text": [
+    {
+      "text": "EM change (points)",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.34154545454545454,
+        0.3655377807617187,
+        0.45645454545454545,
+        0.39513347371419266
+      ]
+    },
+    {
+      "text": "-2",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.20544848484848482,
+        0.41249458482530377,
+        0.21708484848484844,
+        0.4420902777777777
+      ]
+    },
+    {
+      "text": "-1",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.3761151515151515,
+        0.41249458482530377,
+        0.3877515151515151,
+        0.4420902777777777
+      ]
+    },
+    {
+      "text": "0",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5489636363636363,
+        0.41249458482530377,
+        0.5562363636363636,
+        0.4420902777777777
+      ]
+    },
+    {
+      "text": "Fold A",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.08953787878787878,
+        0.724501953125,
+        0.13087878787878787,
+        0.7540976460774739
+      ]
+    },
+    {
+      "text": "Fold B",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.08869696969696968,
+        0.619189453125,
+        0.13087878787878787,
+        0.648785146077474
+      ]
+    },
+    {
+      "text": "A+B*",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.0945151515151515,
+        0.5138769531249999,
+        0.13087878787878787,
+        0.5434726460774739
+      ]
+    },
+    {
+      "text": "EM change (points)",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7985454545454546,
+        0.4205377807617189,
+        0.9134545454545454,
+        0.45013347371419277
+      ]
+    },
+    {
+      "text": "-0.3",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7607922077922078,
+        0.46749458482530387,
+        0.7840649350649351,
+        0.4970902777777778
+      ]
+    },
+    {
+      "text": "0.0",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.8632597402597403,
+        0.46749458482530387,
+        0.8821688311688312,
+        0.4970902777777778
+      ]
+    },
+    {
+      "text": "0.3",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.9635454545454546,
+        0.46749458482530387,
+        0.9824545454545455,
+        0.4970902777777778
+      ]
+    },
+    {
+      "text": "(a)  SQA3D validation",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.035,
+        0.9205,
+        0.21536363636363637,
+        0.958
+      ]
+    },
+    {
+      "text": "3D-LLaVA",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5915,
+        0.928404307047526,
+        0.655,
+        0.958
+      ]
+    },
+    {
+      "text": "Frozen fold rule: lower CI bound > -1 EM",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.8569745992024741,
+        0.2837272727272727,
+        0.8865702921549479
+      ]
+    },
+    {
+      "text": "Cohort",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.33397459920247397,
+        0.07572727272727273,
+        0.3635702921549479
+      ]
+    },
+    {
+      "text": "Questions / scenes",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.286,
+        0.33397459920247397,
+        0.3936363636363636,
+        0.3635702921549479
+      ]
+    },
+    {
+      "text": "EM change [95% CI]",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5313636363636364,
+        0.33397459920247397,
+        0.655,
+        0.3635702921549479
+      ]
+    },
+    {
+      "text": "A: disjoint scenes",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.26720215352376303,
+        0.13972727272727273,
+        0.29679784647623697
+      ]
+    },
+    {
+      "text": "1,749 / 35",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.286,
+        0.26720215352376303,
+        0.34709090909090906,
+        0.29679784647623697
+      ]
+    },
+    {
+      "text": "-0.7433 [-1.6609, +0.1170]",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.49411363636363637,
+        0.26720215352376303,
+        0.655,
+        0.29679784647623697
+      ]
+    },
+    {
+      "text": "B: overlapping scenes",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.19320215352376297,
+        0.163,
+        0.22279784647623693
+      ]
+    },
+    {
+      "text": "1,512 / 30",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.286,
+        0.19320215352376297,
+        0.34709090909090906,
+        0.22279784647623693
+      ]
+    },
+    {
+      "text": "-1.1905 [-2.0355, -0.4013]",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.4979090909090909,
+        0.19320215352376297,
+        0.655,
+        0.22279784647623693
+      ]
+    },
+    {
+      "text": "Combined A+B*",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.119202153523763,
+        0.13597727272727272,
+        0.14879784647623698
+      ]
+    },
+    {
+      "text": "3,261 / 65",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.286,
+        0.119202153523763,
+        0.34709090909090906,
+        0.14879784647623698
+      ]
+    },
+    {
+      "text": "-0.9506 [-1.5610, -0.3511]",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.4984772727272727,
+        0.119202153523763,
+        0.655,
+        0.14879784647623698
+      ]
+    },
+    {
+      "text": "(b)  MMScan / 3RScan",
+      "font_pt": 8.5,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.722,
+        0.9219128790961373,
+        0.8921818181818182,
+        0.958
+      ]
+    },
+    {
+      "text": "LLaVA-3D",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.722,
+        0.8569745992024741,
+        0.7855,
+        0.8865702921549479
+      ]
+    },
+    {
+      "text": "4,934 questions / 234 scenes",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.722,
+        0.789974599202474,
+        0.8907272727272727,
+        0.8195702921549479
+      ]
+    },
+    {
+      "text": "EM change [95% CI]",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.722,
+        0.369974599202474,
+        0.8456363636363636,
+        0.3995702921549479
+      ]
+    },
+    {
+      "text": "-0.0608",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.722,
+        0.30756951904296875,
+        0.7830909090909091,
+        0.344125
+      ]
+    },
+    {
+      "text": "[-0.2980, +0.1773]",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.722,
+        0.24697459920247397,
+        0.834,
+        0.2765702921549479
+      ]
+    },
+    {
+      "text": "No frozen loss margin",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.722,
+        0.18297459920247394,
+        0.8511818181818182,
+        0.21257029215494788
+      ]
+    },
+    {
+      "text": "Both folds: non-inferiority NOT established",
+      "font_pt": 7.5,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.035,
+        0.058974599202473964,
+        0.3110909090909091,
+        0.08804577128092447
+      ]
+    },
+    {
+      "text": "Superiority NOT established",
+      "font_pt": 7.5,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.722,
+        0.058974599202473964,
+        0.9035454545454545,
+        0.08804577128092447
+      ]
+    },
+    {
+      "text": "*A+B is not independent. Marginal two-sided 95% scene-bootstrap CIs; different x scales.",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.035,
+        0.01097459920247396,
+        0.5639090909090909,
+        0.040570292154947916
+      ]
+    }
+  ],
+  "evidence": {
+    "effects": [
+      {
+        "ci95": [
+          -1.6609392898052693,
+          0.11695906432748539
+        ],
+        "delta": -0.7432818753573471,
+        "label": "Fold A: disjoint scenes",
+        "metric": "EM points",
+        "noninferiority_margin": -1.0,
+        "panel": "sqa3d",
+        "passes_frozen_gate": false,
+        "questions": 1749,
+        "scenes": 35,
+        "source": "results/raw/followup/sqa3d_validation_replication_20260919/cross_fold_analysis.json",
+        "source_sha256": "50e1fd1e2abff1a5e9ad794052f7beb320329195ae8b3e60de7cc30091bcea84"
+      },
+      {
+        "ci95": [
+          -2.0354563361785947,
+          -0.4013377926421404
+        ],
+        "delta": -1.1904761904761905,
+        "label": "Fold B: overlapping scenes",
+        "metric": "EM points",
+        "noninferiority_margin": -1.0,
+        "panel": "sqa3d",
+        "passes_frozen_gate": false,
+        "questions": 1512,
+        "scenes": 30,
+        "source": "results/raw/followup/sqa3d_validation_replication_20260919/cross_fold_analysis.json",
+        "source_sha256": "50e1fd1e2abff1a5e9ad794052f7beb320329195ae8b3e60de7cc30091bcea84"
+      },
+      {
+        "ci95": [
+          -1.5610365282547611,
+          -0.3511011809766997
+        ],
+        "delta": -0.9506286415210058,
+        "label": "Combined A+B (not independent)",
+        "metric": "EM points",
+        "noninferiority_margin": null,
+        "panel": "sqa3d",
+        "passes_frozen_gate": null,
+        "questions": 3261,
+        "scenes": 65,
+        "source": "results/raw/followup/sqa3d_validation_replication_20260919/cross_fold_analysis.json",
+        "source_sha256": "50e1fd1e2abff1a5e9ad794052f7beb320329195ae8b3e60de7cc30091bcea84"
+      },
+      {
+        "ci95": [
+          -0.29797377830750893,
+          0.17733990147783252
+        ],
+        "delta": -0.06080259424402108,
+        "label": "MMScan / 3RScan",
+        "metric": "EM points",
+        "noninferiority_margin": null,
+        "panel": "mmscan",
+        "passes_frozen_gate": false,
+        "questions": 4934,
+        "scenes": 234,
+        "source": "results/raw/followup/mmscan_3rscan_confirmation_20260917/mmscan_v3_independent_audit_20260919.json",
+        "source_sha256": "bd228cdb4bcad13b5997b91b0ee2f42ba37c15177b0713fda3418519a286e2d6"
+      }
+    ],
+    "independent_combined_analysis": false,
+    "interval": "marginal two-sided 95%",
+    "selection_adjusted": false,
+    "reuse": "forest-layout redraw with unchanged four effects",
+    "different_x_scales": true,
+    "combined_has_no_noninferiority_reference": true
+  },
+  "new_statistics": false,
+  "excluded_observations": 0,
+  "outputs": {
+    "pdf": "f225b959890c1783c8e88035840c3333c39826d3f41050099debd7f578d34444",
+    "svg": "63d68ea5e761533fdb504ccd4ef39417a930371af04e9e658ec7a2fd7d5d777b",
+    "png": "7e5b5e1b54fbb2ef597977074518e16c8b59ebb5faabba976aa06a92b9cff9c8"
+  }
+}

@@ -1,0 +1,27 @@
+\clearpage
+\setcounter{page}{1}
+\maketitlesupplementary
+
+% Preserve the manuscript's appendix and S-number conventions.
+\appendix
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+% Distinct destinations also support the template's optional combined build.
+\renewcommand{\theHtable}{supp.\arabic{table}}
+\renewcommand{\theHfigure}{supp.\arabic{figure}}
+\renewcommand{\theHequation}{supp.\arabic{equation}}
+
+\input{sec/supp/00_overview}
+\input{sec/supp/A_setup}
+\input{sec/supp/B_attention_profiles}
+\input{sec/supp/C_deletion_controls}
+\input{sec/supp/D_retention_quality}
+\input{sec/supp/E_transfer}
+\input{sec/supp/F_efficiency}
+\input{sec/supp/G_reproducibility}
+\input{sec/supp/H_qualitative}
+\input{sec/supp/I_limitations}

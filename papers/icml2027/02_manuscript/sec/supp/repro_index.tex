@@ -1,0 +1,71 @@
+\subsection{Reproduction Scope}
+
+Rebuilding the document, inspecting saved records, rescoring predictions, and replaying inference require different assets. \Cref{tab:supp_repro_scope} identifies the available inputs and remaining requirements for each activity. A matching hash establishes content identity with the recorded file; it does not verify historical execution or complete runtime availability.
+
+\begin{table*}[t]
+\centering
+\caption{Reproduction scope of the accompanying document package and indexed local records. The source bundle supports document rebuilding; it is not a standalone experimental release.}
+\label{tab:supp_repro_scope}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.18\textwidth}>{\raggedright\arraybackslash}p{0.37\textwidth}>{\raggedright\arraybackslash}p{0.39\textwidth}@{}}
+\toprule
+Activity & Available inputs & Verification boundary \\
+\midrule
+Document rebuilding & TeX, styles, references, and figure PDFs in the package &
+The document can be compiled without model inference. \\
+Record inspection & Local predictions, ground truth, question inputs, and indexed sources &
+Selected copies match recorded hashes; known source mismatches remain indexed.
+Indexed files need not be publicly redistributed. \\
+Prediction rescoring & Saved answers and a hash-matching scoring entry &
+The scorer was not rerun for this revision; full dependencies and numerical parity remain unvalidated. \\
+Inference replay & Hash-matching historical GeoGate core and four upstream model files &
+The historical quality runner remains unretrieved; complete model, data, import, and runtime dependencies remain unvalidated. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Project-Relative Entry Points}
+\label{sec:supp_repro_index}
+
+\Cref{tab:supp_repro_entries} locates experiment records relative to the research checkout: \texttt{A} denotes \texttt{analysis/}, \texttt{G} denotes \texttt{adaptive\_token/}, and \texttt{F} denotes \texttt{results/raw/followup/}. These are local artifact pointers, not public download links. The entries distinguish the evidence retained for inspection from the dependencies still needed to replay inference.
+
+\begin{table*}[t]
+\centering
+\caption{Project-relative reproduction pointers. Each row identifies a code entry and its frozen record; it does not certify a complete runnable release.}
+\label{tab:supp_repro_entries}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.15\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}>{\raggedright\arraybackslash}p{0.41\textwidth}@{}}
+\toprule
+Evidence & Existing entry & Record or configuration \\
+\midrule
+Attention profiles & \nolinkurl{A/e1_attention_profile.py};
+\nolinkurl{A/e1b_attention_profile_3dllava.py} &
+\nolinkurl{results/raw/e1_profile_llava3d.json};
+\nolinkurl{results/raw/e1b_profile_3dllava.json} \\
+Matched-input QA & \nolinkurl{G/run_shared_input_quality_v3.py} &
+\nolinkurl{F/review_v3_20260908/quality_full.manifest.json} \\
+Analytical-cost controls & \nolinkurl{G/run_stage_v4.py} &
+\nolinkurl{F/review_v4_audit_20260910/manifest.json} \\
+Paired layer replay & \nolinkurl{G/run_layer_sweep_paired.py} &
+\nolinkurl{F/layer_sweep_paired_20260920/layer_sweep_audit.json} \\
+Readout controls & \nolinkurl{A/run_readout_generation_v15.py};
+\nolinkurl{A/run_fixed_deletion_v21.py} &
+\nolinkurl{F/readout_generation_v15_full_20260913/full.manifest.json};
+\nolinkurl{F/fixed_deletion_v21_full_20260917/full.manifest.json} \\
+Timing and batching & \nolinkurl{G/run_scanqa_timing_boundaries_v4.py};
+\nolinkurl{A/run_hetero_batch_throughput_v18.py} &
+\nolinkurl{F/timing_boundaries_v5_20260912/outputs/session1.manifest.json};
+\nolinkurl{F/hetero_batch_v18b_throughput_mixed_b4_20260919/summary_v18c_independent.json} \\
+SQA3D validation & \nolinkurl{G/run_sqa3d_scene_disjoint.py} &
+\nolinkurl{F/sqa3d_scene_disjoint_20260919/manifest.json};
+\nolinkurl{F/sqa3d_validation_replication_20260919/manifest.json} \\
+External 3RScan & \nolinkurl{G/run_mmscan_geogate.py} &
+\nolinkurl{F/mmscan_3rscan_confirmation_20260917/experiment_lock_v2.json} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Model and source identities.} The records identify \texttt{LLaVA-3D-7B}, and \texttt{3D-LLaVA-7B-LoRA} with the \texttt{llava-v1.5-7b} base and \nolinkurl{ost-sa-only-llava-align-scannet200.pth} point-cloud weights. \nolinkurl{results/PUBLICATION_PROVENANCE_20260916.json} records checkpoint, adapter, base-model, and point-cloud file hashes. These identities were read from local records; remotely stored weights were not revalidated. The matched-input QA runner still differs from its historical manifest hash. The historical core's matching copies are indexed under \nolinkurl{F/adaptive_corrected_v2_20260912/adaptive_token/geogate_v0.py} and \nolinkurl{F/timing_boundaries_v5_20260912/adaptive_token/geogate_v0.py}. Inference replay additionally requires complete authorized model/data assets and the environment described in the index.
+
+
+\paragraph{Run identities and integrity checks.} The shared-input complete-answer run, \texttt{v15}, contains 74,800 JSONL rows for 4,675 questions under 16 conditions. The fixed-set replay, \texttt{v21}, reproduces its unpruned baseline exactly (\texttt{mismatch\_count=0}). The MMScan input preflight corrected a stale 24-frame expectation to the checkpoint's actual 20-frame contract.
+
+\paragraph{Fixed-set factorial diagnostic.} Machine-readable result: \texttt{results/raw/followup/}\allowbreak \texttt{fixed\_deletion\_v21\_full\_20260917/}\allowbreak \texttt{factorial\_decomposition\_20260918.json}; implementation: \texttt{analysis/}\allowbreak \texttt{audit\_fixed\_deletion\_v21\_factorial.py}.

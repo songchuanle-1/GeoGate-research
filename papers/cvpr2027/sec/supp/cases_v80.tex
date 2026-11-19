@@ -1,0 +1,48 @@
+% Questions, references, answers, and original table bodies remain frozen.
+\label{sec:supp_answer_cases}
+
+\Cref{tab:supp_cases_a,tab:supp_cases_b} illustrate each exact-match transition with one example from each frozen SQA3D validation fold. Within each fold and outcome, selection uses the smallest SHA256 of \texttt{geogate-v80-case|fold|question\_id}. This rule was fixed before reading the selected texts, after the original experiment. Every eligible question entered selection; length, visual appeal, and error severity were not filters. Answers use evaluator normalization, while the full situation, question, answer-format suffix, and raw references remain unchanged.
+
+Each \emph{eligible} count is the total number of questions in that fold's exact-match transition category. These counts describe the observed folds; the eight selected examples do not estimate frequencies beyond those folds. They illustrate output transitions without identifying semantic causes, visual mechanisms, or individual-token causality.
+
+Fold A's wrong-to-correct example changes ``l shaped'' to the reference ``l-shaped''. Its wrong-to-wrong example answers ``picture'' against ``pictures''. Both illustrate exact-match sensitivity to wording, rather than demonstrated semantic improvement or deterioration. Fold B includes directional (left/right) and color (brown/red) transitions. Answers alone do not reveal the causes of these changes.
+
+\begin{table*}[p]
+\centering
+\small
+\caption{Fixed-rule SQA3D examples, fold A: development-disjoint scenes. No case is selected by visual inspection.}
+\label{tab:supp_cases_a}
+\begin{tabular}{@{}p{0.13\textwidth}p{0.51\textwidth}p{0.14\textwidth}p{0.14\textwidth}@{}}
+\toprule
+Transition & Situation and question / reference & Native & GeoGate \\
+\midrule
+Wrong to correct\newline 22 eligible & I set my coffee cup down on the table and there is a couch to my right. What shape is the red couch to my 3 o'clock? Answer the question using a single word or phrase.\newline \textit{Reference:} l-shaped\newline {\footnotesize val-scene0568\_00-19} & l shaped & l-shaped \\
+\midrule
+Correct to wrong\newline 35 eligible & I am facing a mattress across the room and there is a cabinet on my right. Is the number of pictures in front of me odd or even? Answer the question using a single word or phrase.\newline \textit{Reference:} even\newline {\footnotesize val-scene0629\_00-43} & even & odd \\
+\midrule
+Correct to correct\newline 937 eligible & I am in front of the whiteboard getting ready for a meeting in 15 minutes, and right behind me is a table with a chair in the corner of the table. Is the amount of whiteboard I am facing odd or even? Answer the question using a single word or phrase.\newline \textit{Reference:} odd\newline {\footnotesize val-scene0655\_00-11} & odd & odd \\
+\midrule
+Wrong to wrong\newline 755 eligible & I am placing can bottles into the recycling bin in front of me, fridge is to my right. What's on the wall behind me? Answer the question using a single word or phrase.\newline \textit{Reference:} pictures\newline {\footnotesize val-scene0670\_00-2} & picture & picture \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[p]
+\centering
+\small
+\caption{Fixed-rule SQA3D examples, fold B: development-overlapping scenes. No case is selected by visual inspection.}
+\label{tab:supp_cases_b}
+\begin{tabular}{@{}p{0.13\textwidth}p{0.51\textwidth}p{0.14\textwidth}p{0.14\textwidth}@{}}
+\toprule
+Transition & Situation and question / reference & Native & GeoGate \\
+\midrule
+Wrong to correct\newline 12 eligible & I sit at the head of the table and around me are other chairs. Which direction should I go if I want to open the window? Answer the question using a single word or phrase.\newline \textit{Reference:} right\newline {\footnotesize val-scene0011\_00-21} & left & right \\
+\midrule
+Correct to wrong\newline 30 eligible & I started cooking at the kitchen island and behind me was the kitchen counter. What color is the chair that is facing the table in front of me to left? Answer the question using a single word or phrase.\newline \textit{Reference:} brown\newline {\footnotesize val-scene0063\_00-34} & brown & red \\
+\midrule
+Correct to correct\newline 804 eligible & I am holding on a chair in my ten o'clock direction, standing between two tables. I hear the phone ringing in a backpack on my right. I can easily pick the backpack by stretching my right hand: true or false? Answer the question using a single word or phrase.\newline \textit{Reference:} true\newline {\footnotesize val-scene0196\_00-18} & true & true \\
+\midrule
+Wrong to wrong\newline 666 eligible & I am standing between a table and a whiteboard, while there is a backpack in my one o'clock direction. Is the space that I can move forward from my current direction? Answer the question using a single word or phrase.\newline \textit{Reference:} yes\newline {\footnotesize val-scene0342\_00-33} & no & no \\
+\bottomrule
+\end{tabular}
+\end{table*}

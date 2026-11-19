@@ -1,0 +1,5 @@
+label,panel,delta_em_points,lower,upper,questions,scenes,noninferiority_margin,passes_frozen_gate
+Fold A: disjoint scenes,sqa3d,-0.7432818753573471,-1.6609392898052693,0.11695906432748539,1749,35,-1.0,False
+Fold B: overlapping scenes,sqa3d,-1.1904761904761905,-2.0354563361785947,-0.4013377926421404,1512,30,-1.0,False
+Combined A+B (not independent),sqa3d,-0.9506286415210058,-1.5610365282547611,-0.3511011809766997,3261,65,,
+MMScan / 3RScan,mmscan,-0.06080259424402108,-0.29797377830750893,0.17733990147783252,4934,234,,False

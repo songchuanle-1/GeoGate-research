@@ -1,0 +1,39 @@
+\section{Baseline context and reproducibility}
+\label{sec:supp_repro}
+This section defines the scope of the baseline comparisons and identifies the assets needed to inspect or reproduce the results. Statements about implementation availability apply to the inspected repository commits, not necessarily to current releases.
+
+
+\input{sec/supp/repro_index}
+
+\subsection{Related methods and baseline availability}
+\label{sec:supp_baseline_availability}
+
+\textbf{Broader related work.} Related 3D interfaces cover embodied action, generation, object understanding, and interactive grounding~\cite{huang2024leo,zhen20243dvla, qi2024gpt4point,qi2024shapellm,chen2024ll3da,chen2024grounded3dllm}, building on alignment and open-vocabulary perception~\cite{zhou2023uni3d, xue2023ulip,peng2023openscene,jatavallabhula2023conceptfusion}. EViT, ToMe, SparseVLM, VisPruner, and FoPru study reorganization, merging, or importance selection outside the tested 3D protocol~\cite{liang2022evit, bolya2023tome,zhang2024sparsevlm,zhang2024fastervlm,jiang2024fopru}. DINO and TokenLearner provide related analyses of attention and token structure~\cite{caron2021dino,ryoo2021tokenlearner}. HiMAP studies information flow and hierarchical pruning~\cite{yin2025himap}, establishing phase-based pruning as an existing research direction. GeoGate contributes measurements in 3D models and controls that delimit the scheduling interpretation.
+
+\paragraph{HiSC.} The official HiSC repository was checked at the following commit:
+{\raggedright\par\noindent
+\texttt{a9b2ee51df8bee0f6c21\allowbreak fc7e1852f00a7f2e81b3}.\par}
+At that commit, it contained only a two-line README and provided no executable model, configuration, checkpoint binding, or evaluation entry point. HiSC therefore remains directly related work; we claim no official reproduction and include no self-reported metrics in the implemented-baseline table.
+
+\paragraph{CoVeR.} The official CoVeR project links to the repository and checked commit below:
+{\raggedright\par\noindent
+\url{https://github.com/humansensinglab/CoVeR}\par\noindent
+\texttt{45c9865cb45121802d5e\allowbreak ba144f20d4da4a126624}.\par}
+At that commit, its README stated that the full codebase is forthcoming. The repository provides no executable selector, model configuration, checkpoint binding, or evaluation entry point. We discuss CoVeR as directly related work without an implemented baseline or empirical comparison. The superpoint coverage experiment is not a CoVeR reproduction.
+
+\paragraph{HCC-3D.} The official HCC-3D repository was checked at the following commit:
+{\raggedright\par\noindent
+\texttt{9017e87342d4e17ecd75\allowbreak d9419bdea3b7053e99f5}.\par}
+It releases training and evaluation code with model checkpoints for a PointLLM/Phi-2 object understanding stack. It evaluates ModelNet40 classification and Objaverse classification and captioning. Its learned compressor, checkpoint, input representation, and task protocol are incompatible with our frozen LLaVA-3D ScanQA and SQA3D pipelines. We therefore discuss HCC-3D as related work without placing its self-reported metrics in the implemented-baseline table.
+
+\subsection{Recorded environment and checksums}
+Key frozen artifact hashes are:
+
+\begin{itemize}
+\item complete-answer intervention raw JSONL: \texttt{23591076458c4626}\allowbreak \texttt{908f3a16b955400f}\allowbreak \texttt{83aec77b8f72752f}\allowbreak \texttt{47e058e81690d33a};
+\item first-token intervention raw JSONL: \texttt{30324c06a4d20883}\allowbreak \texttt{dadd9ceeb876321e}\allowbreak \texttt{02b52d8784cf8370}\allowbreak \texttt{422a1a1100a897fa};
+\item matched-input quality raw JSONL: \texttt{426cb1bd5c828562}\allowbreak \texttt{7a182faddff476cc}\allowbreak \texttt{81a5e6fd81b98a16}\allowbreak \texttt{4ae66136c2ad9ff9};
+\item deterministic tensor-batch final comparison: \texttt{2c8613b36da2d0c6}\allowbreak \texttt{b0ae775c748b4af0}\allowbreak \texttt{320d5729abadad4f}\allowbreak \texttt{3b592d02a59895c6}.
+\end{itemize}
+
+Execution records identify Python 3.10.20, PyTorch 2.6.0 with CUDA 12.4, cuDNN 9.1, Transformers 4.37.2, and driver 580.95.05 on one H100 80GB. These versions document the completed runs; they were not prespecified experimental factors.

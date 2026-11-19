@@ -1,0 +1,606 @@
+{
+  "figure": "fig_layer_replay_paired_final",
+  "width_in": 6.875,
+  "height_in": 2.381284916201117,
+  "font": "Times New Roman",
+  "text": [
+    {
+      "text": "L14  27.7219",
+      "font_pt": 7.5,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.2828235294117647,
+        0.7144989753838086,
+        0.3695883445997026,
+        0.8053198234232447
+      ]
+    },
+    {
+      "text": "Native  27.4225",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.0826470588235294,
+        0.6397814021006436,
+        0.17719251336898395,
+        0.6795524588119096
+      ]
+    },
+    {
+      "text": "Pruning block (zero-indexed)",
+      "font_pt": 8.0,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.17513636363636365,
+        0.09707173613656726,
+        0.37586363636363634,
+        0.14073725218413977
+      ]
+    },
+    {
+      "text": "2",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.07656951871657754,
+        0.16406732712711794,
+        0.08384224598930481,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "6",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.17421657754010694,
+        0.16406732712711794,
+        0.1814893048128342,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "10",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.2682272727272727,
+        0.16406732712711794,
+        0.2827727272727273,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "14",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.3658743315508021,
+        0.16406732712711794,
+        0.38041978609625665,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "18",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.46352139037433154,
+        0.16406732712711794,
+        0.47806684491978607,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "ScanQA EM (%)",
+      "font_pt": 8.0,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.017724116161616153,
+        0.3675023826979471,
+        0.03284848484848485,
+        0.6924976173020526
+      ]
+    },
+    {
+      "text": "22",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.040929292929292926,
+        0.22344961713913364,
+        0.05547474747474747,
+        0.2632206738503995
+      ]
+    },
+    {
+      "text": "24",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.040929292929292926,
+        0.38456072825024457,
+        0.05547474747474747,
+        0.42433178496151047
+      ]
+    },
+    {
+      "text": "26",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.040929292929292926,
+        0.5456718393613558,
+        0.05547474747474747,
+        0.5854428960726216
+      ]
+    },
+    {
+      "text": "28",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.040929292929292926,
+        0.7067829504724669,
+        0.05547474747474747,
+        0.7465540071837328
+      ]
+    },
+    {
+      "text": "L14 minus comparator (EM points)",
+      "font_pt": 8.0,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.6775,
+        0.09707173613656726,
+        0.9175,
+        0.14073725218413977
+      ]
+    },
+    {
+      "text": "0",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.6465443592552026,
+        0.16406732712711794,
+        0.6538170865279299,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "2",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7344961664841182,
+        0.16406732712711794,
+        0.7417688937568455,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "4",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.8224479737130339,
+        0.16406732712711794,
+        0.8297207009857611,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "6",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.9103997809419495,
+        0.16406732712711794,
+        0.9176725082146768,
+        0.20383838383838382
+      ]
+    },
+    {
+      "text": "native",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5675656565656566,
+        0.7597800264958583,
+        0.6024747474747475,
+        0.7995510832071241
+      ]
+    },
+    {
+      "text": "L2",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5864747474747475,
+        0.7089028335134021,
+        0.6024747474747475,
+        0.7486738902246679
+      ]
+    },
+    {
+      "text": "L4",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5864747474747475,
+        0.658025640530946,
+        0.6024747474747475,
+        0.6977966972422118
+      ]
+    },
+    {
+      "text": "L6",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5864747474747475,
+        0.60714844754849,
+        0.6024747474747475,
+        0.6469195042597558
+      ]
+    },
+    {
+      "text": "L8",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5864747474747475,
+        0.5562712545660338,
+        0.6024747474747475,
+        0.5960423112772996
+      ]
+    },
+    {
+      "text": "L10",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5792020202020203,
+        0.5053940615835776,
+        0.6024747474747475,
+        0.5451651182948435
+      ]
+    },
+    {
+      "text": "L12",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5792020202020203,
+        0.4545168686011215,
+        0.6024747474747475,
+        0.4942879253123874
+      ]
+    },
+    {
+      "text": "L13",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5792020202020203,
+        0.4036396756186654,
+        0.6024747474747475,
+        0.4434107323299313
+      ]
+    },
+    {
+      "text": "L15",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5792020202020203,
+        0.35276248263620924,
+        0.6024747474747475,
+        0.39253353934747515
+      ]
+    },
+    {
+      "text": "L16",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5792020202020203,
+        0.3018852896537531,
+        0.6024747474747475,
+        0.341656346365019
+      ]
+    },
+    {
+      "text": "L18",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.5792020202020203,
+        0.251008096671297,
+        0.6024747474747475,
+        0.2907791533825629
+      ]
+    },
+    {
+      "text": "(a)  Paired-replay means",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.068,
+        0.8896070381231671,
+        0.26954545454545453,
+        0.94
+      ]
+    },
+    {
+      "text": "(b)  Simultaneous 95% max-t CIs",
+      "font_pt": 9.0,
+      "font_file": "timesbd.ttf",
+      "bbox": [
+        0.615,
+        0.8896070381231671,
+        0.884090909090909,
+        0.94
+      ]
+    },
+    {
+      "text": "ScanQA | 4,675 questions / 71 scenes | R = 0.10",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.068,
+        0.01755917987842131,
+        0.35370454545454544,
+        0.057330236589687195
+      ]
+    },
+    {
+      "text": "Resolved positive",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.7576969696969698,
+        0.04236950146627567,
+        0.8624242424242425,
+        0.08214055817754155
+      ]
+    },
+    {
+      "text": "Unresolved",
+      "font_pt": 7.5,
+      "font_file": "times.ttf",
+      "bbox": [
+        0.9109090909090909,
+        0.04236950146627567,
+        0.9763636363636363,
+        0.08214055817754155
+      ]
+    }
+  ],
+  "evidence": {
+    "source": "results/raw/followup/layer_sweep_paired_20260920/layer_sweep_audit.json",
+    "sha256": "da119d9219ae05296a51633297e0731ef9c1e0ee3729e74dd995a0613d51c63b",
+    "family": "primary_l14_contrasts",
+    "questions": 4675,
+    "scenes": 71,
+    "arm_em_percent": {
+      "L10": 26.35294117647059,
+      "L12": 26.994652406417114,
+      "L13": 26.90909090909091,
+      "L14": 27.72192513368984,
+      "L15": 27.593582887700535,
+      "L16": 27.46524064171123,
+      "L18": 27.52941176470588,
+      "L2": 22.802139037433157,
+      "L4": 22.524064171122994,
+      "L6": 23.25133689839572,
+      "L8": 24.898395721925134,
+      "native": 27.422459893048128
+    },
+    "contrasts": [
+      {
+        "comparator": "native",
+        "candidate": "L14",
+        "delta_em_points": 0.2994652406417109,
+        "max_t_95ci_em_points": [
+          -0.41001819634061976,
+          1.0089486776240415
+        ],
+        "max_t_decision": "unresolved",
+        "reference": "native",
+        "scene_bootstrap_se_em_points": 0.260816609727973,
+        "unadjusted_normal_95ci_em_points": [
+          -0.21173531442511612,
+          0.8106657957085379
+        ],
+        "unadjusted_two_sided_p": 0.2556744325567443
+      },
+      {
+        "comparator": "L2",
+        "candidate": "L14",
+        "delta_em_points": 4.919786096256685,
+        "max_t_95ci_em_points": [
+          3.23323472048281,
+          6.6063374720305585
+        ],
+        "max_t_decision": "positive",
+        "reference": "L2",
+        "scene_bootstrap_se_em_points": 0.6200012417940994,
+        "unadjusted_normal_95ci_em_points": [
+          3.7045836623402497,
+          6.134988530173119
+        ],
+        "unadjusted_two_sided_p": 9.999000099990002e-05
+      },
+      {
+        "comparator": "L4",
+        "candidate": "L14",
+        "delta_em_points": 5.197860962566844,
+        "max_t_95ci_em_points": [
+          3.3908848099450664,
+          7.004837115188622
+        ],
+        "max_t_decision": "positive",
+        "reference": "L4",
+        "scene_bootstrap_se_em_points": 0.6642711717001586,
+        "unadjusted_normal_95ci_em_points": [
+          3.8958894660345336,
+          6.499832459099156
+        ],
+        "unadjusted_two_sided_p": 9.999000099990002e-05
+      },
+      {
+        "comparator": "L6",
+        "candidate": "L14",
+        "delta_em_points": 4.470588235294118,
+        "max_t_95ci_em_points": [
+          2.827019191168287,
+          6.114157279419949
+        ],
+        "max_t_decision": "positive",
+        "reference": "L6",
+        "scene_bootstrap_se_em_points": 0.6042003006666671,
+        "unadjusted_normal_95ci_em_points": [
+          3.28635564598745,
+          5.654820824600786
+        ],
+        "unadjusted_two_sided_p": 9.999000099990002e-05
+      },
+      {
+        "comparator": "L8",
+        "candidate": "L14",
+        "delta_em_points": 2.823529411764705,
+        "max_t_95ci_em_points": [
+          1.4122793678421377,
+          4.234779455687273
+        ],
+        "max_t_decision": "positive",
+        "reference": "L8",
+        "scene_bootstrap_se_em_points": 0.5187963985458112,
+        "unadjusted_normal_95ci_em_points": [
+          1.8066884706149156,
+          3.8403703529144946
+        ],
+        "unadjusted_two_sided_p": 9.999000099990002e-05
+      },
+      {
+        "comparator": "L10",
+        "candidate": "L14",
+        "delta_em_points": 1.3689839572192497,
+        "max_t_95ci_em_points": [
+          0.2594182284016845,
+          2.478549686036815
+        ],
+        "max_t_decision": "positive",
+        "reference": "L10",
+        "scene_bootstrap_se_em_points": 0.40789278026197534,
+        "unadjusted_normal_95ci_em_points": [
+          0.569514107905778,
+          2.168453806532721
+        ],
+        "unadjusted_two_sided_p": 0.0014998500149985001
+      },
+      {
+        "comparator": "L12",
+        "candidate": "L14",
+        "delta_em_points": 0.7272727272727264,
+        "max_t_95ci_em_points": [
+          0.002735760475053566,
+          1.451809694070399
+        ],
+        "max_t_decision": "positive",
+        "reference": "L12",
+        "scene_bootstrap_se_em_points": 0.2663505100365919,
+        "unadjusted_normal_95ci_em_points": [
+          0.20522572760100638,
+          1.2493197269444465
+        ],
+        "unadjusted_two_sided_p": 0.0058994100589941
+      },
+      {
+        "comparator": "L13",
+        "candidate": "L14",
+        "delta_em_points": 0.8128342245989295,
+        "max_t_95ci_em_points": [
+          0.04213743634567556,
+          1.5835310128521833
+        ],
+        "max_t_decision": "positive",
+        "reference": "L13",
+        "scene_bootstrap_se_em_points": 0.28331954343489096,
+        "unadjusted_normal_95ci_em_points": [
+          0.2575279194665432,
+          1.3681405297313158
+        ],
+        "unadjusted_two_sided_p": 0.0045995400459954
+      },
+      {
+        "comparator": "L15",
+        "candidate": "L14",
+        "delta_em_points": 0.12834224598930466,
+        "max_t_95ci_em_points": [
+          -0.34991665119139154,
+          0.6066011431700009
+        ],
+        "max_t_decision": "unresolved",
+        "reference": "L15",
+        "scene_bootstrap_se_em_points": 0.17581504744558957,
+        "unadjusted_normal_95ci_em_points": [
+          -0.21625524700405085,
+          0.4729397389826601
+        ],
+        "unadjusted_two_sided_p": 0.47455254474552544
+      },
+      {
+        "comparator": "L16",
+        "candidate": "L14",
+        "delta_em_points": 0.2566844919786093,
+        "max_t_95ci_em_points": [
+          -0.3508063208259294,
+          0.8641753047831481
+        ],
+        "max_t_decision": "unresolved",
+        "reference": "L16",
+        "scene_bootstrap_se_em_points": 0.22332261188574642,
+        "unadjusted_normal_95ci_em_points": [
+          -0.1810278273174537,
+          0.6943968112746723
+        ],
+        "unadjusted_two_sided_p": 0.2625737426257374
+      },
+      {
+        "comparator": "L18",
+        "candidate": "L14",
+        "delta_em_points": 0.19251336898395977,
+        "max_t_95ci_em_points": [
+          -0.4517039248290737,
+          0.836730662796993
+        ],
+        "max_t_decision": "unresolved",
+        "reference": "L18",
+        "scene_bootstrap_se_em_points": 0.23682380974966913,
+        "unadjusted_normal_95ci_em_points": [
+          -0.2716612981253917,
+          0.6566880360933112
+        ],
+        "unadjusted_two_sided_p": 0.43245675432456754
+      }
+    ],
+    "interval": "frozen scene-clustered simultaneous 95% max-t",
+    "iterations": 10000,
+    "seed": 20260920,
+    "max_t_critical_95": 2.7202387061250013,
+    "historical_search_adjusted": false,
+    "native_and_late_superiority": false,
+    "reuse": "typography and spacing; no statistical recomputation"
+  },
+  "new_statistics": false,
+  "excluded_observations": 0,
+  "outputs": {
+    "pdf": "4b3bcd3f275f835663982b164f9ae1a0db1bd611573fac6fa243a9803e3e9ff9",
+    "svg": "52a491200b96643d3503c948263cedc1c2382884c2fb4497e5fafb81aa40e4d5",
+    "png": "1b031a9960301c1920c27ab4919c07349a851d8566bd1cb89b261a9439fad6dc"
+  }
+}

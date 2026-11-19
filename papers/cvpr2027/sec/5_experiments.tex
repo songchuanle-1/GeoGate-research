@@ -1,0 +1,185 @@
+\section{Experiments}
+\label{sec:experiments}
+\subsection{Evaluation setup}
+We evaluate LLaVA-3D-7B and 3D-LLaVA-7B-LoRA on one H100 80GB. QA uses greedy decoding, beam 1, with runner-matched prompts and inputs. ScanQA validation contains 4675 questions in 71 scenes and informed configuration selection. Its 500-question exploratory subset spans all 71 scenes; neither it nor the full-set sweeps provides an independent holdout. SQA3D~\cite{ma2023sqa3d} test contains 3519 questions in 67 scenes and was also inspected previously. \Cref{tab:evidence_map} summarizes the evidence; the supplement documents protocols, provenance, and reproduction limitations.
+
+\begin{table}[t]
+\centering
+\small
+\caption{\textbf{Questions and supporting evidence.} Each comparison addresses the scientific question shown in its row.}
+\label{tab:evidence_map}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.24\columnwidth}p{0.71\columnwidth}@{}}
+\toprule
+Question & Evidence and boundary \\
+\midrule
+Pattern & Profiles (\cref{fig:threephase}); persistence does not
+certify preservation. \\
+Set relevance & Retention/deletion controls; the fixed-set location
+gate fails (\Cref{tab:fixedset}). \\
+Quality & Runner-matched comparisons and transfer
+(\Crefrange{tab:scanqa}{tab:five}); independent preservation remains open. \\
+Cost & Analytical and timed results (\Cref{tab:efficiency});
+joint measured comparison with official 3DZip remains open. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Each comparison uses a matched native (unpruned) baseline from the same runner, listed in its table and the supplementary protocol index. We interpret results within runners, without combining different native baselines or quality and timing from separate runs.
+
+\textbf{Selection and testing.} Exploratory ScanQA profiles informed L14, and joint validation point estimates selected R10. Fixed-set, paired-replay, and SQA3D/MMScan protocols were specified before their respective outcomes, but after the initial exploration. The SQA3D remainder fold was planned after the first fold's negative result. The onset rule, SQA3D R20 follow-up, profile-to-quality analysis, and throughput exclusions are post hoc. The supplement details the selection and testing chronology.
+
+We report exact match (EM@1), consensus-based image description evaluation (CIDEr)~\cite{vedantam2015cider}, and mean intersection over union (mIoU). EM and mIoU use 0--100 scales; CIDEr differences use score points. For quality differences, the scene bootstrap resamples scenes with replacement, preserves paired questions, and computes a question-weighted mean. Reference-corpus inverse document frequency (IDF) remains fixed during CIDEr resampling. An interval containing zero does not by itself establish equivalence or non-inferiority; either claim requires a prespecified margin and an appropriate decision rule. Prespecified contrasts remain conditional on configuration selection; local max-$t$ corrections do not cover the historical search. Scene-ID checks find no overlap between the released-860K mixture and the ScanQA/SQA3D splits used here. The release lacks a complete historical training manifest.
+
+\subsection{Quality under controlled comparisons}
+\begin{table}[t]
+\centering
+\caption{\textbf{LLaVA-3D ScanQA validation schedule grid.} All 4675 questions are evaluated; GeoGate uses L14/R10. KV and FLOPs estimate LM cost, not total memory or latency.}
+\label{tab:scanqa}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+Method & Layer & Kept & EM@1 & CIDEr & Prompt KV & FLOPs \\
+\midrule
+Baseline & --- & 100\% & 27.34 & 93.96 & 100\% & 100\% \\
+FastV-style & 2 & 50\% & 26.55 & 90.44 & 56.4\% & 59.2\% \\
+\textbf{GeoGate} & 14 & 10\% & 27.79 & 94.33 & 21.5\% & 57.9\% \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+Late pruning produces ScanQA point estimates close to native, with uncertainty permitting both gains and losses. In \Cref{tab:scanqa}, R10 changes EM by $+0.45$ points (scene 95\% CI $[-0.07,0.99]$) and CIDEr by $+0.37$ ($[-1.14,1.89]$). These intervals establish neither improvement nor equivalence. The FastV-style L2/R50 control has similar analytical cost; this limited comparison does not characterize a complete Pareto frontier. PyramidDrop-style and AdaToken-inspired controls yield 27.25 and 26.95 EM, with paired results and approximation details in the supplement.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{LLaVA-3D ScanQA analytical-cost controls.} A separate validation runner adjusts early-layer budgets to input length to match L14/128 LM cost.}
+\label{tab:costmatched}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Condition & Mean spatial tokens & EM@1 & CIDEr \\
+\midrule
+Native & 1463.96 & 27.42 & 94.06 \\
+L2 cost matched & 699.71 & 26.67 & 90.67 \\
+L8 cost matched & 491.79 & 26.87 & 92.27 \\
+\textbf{L14/128} & 128.00 & 27.89 & 94.07 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The shared-embedding controls favor the selected late setting at matched analytical LM cost (\Cref{tab:costmatched}). L14-over-L2 and L14-over-L8 EM differences are 1.22 $[0.42,2.12]$ and 1.03 $[0.24,1.85]$, with prespecified 97.5\% scene intervals. Analytical matching does not imply matched measured latency.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{LLaVA-3D ScanQA comparison with official 3DZip.} Full validation set; compressed arms retain 128 spatial tokens, with GeoGate pruning after L14. Equal counts do not imply equal computation.}
+\label{tab:official128}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Condition & Visual tokens & EM@1 & CIDEr \\
+\midrule
+Native & 1464.0 avg. & 27.23 & 93.48 \\
+Official 3DZip & 128 & 25.05 & 86.02 \\
+\textbf{GeoGate} & 128 & 27.96 & 94.25 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+At 128 retained tokens, GeoGate achieves higher ScanQA quality than official 3DZip under the matched-input protocol (\Cref{tab:official128}). Official 3DZip commit \texttt{2fec4a5} and GeoGate share RGB-D tensors, prompt, per-query seed, and cyclic condition order. Native and GeoGate share the expanded embedding and cap choices. GeoGate-minus-3DZip differences are $+2.91$ EM $[1.96,3.90]$ and $+8.24$ CIDEr $[5.80,10.72]$. Against native, the differences are $+0.73$ EM $[0.22,1.24]$ and $+0.77$ CIDEr $[-0.68,2.23]$. These scene 95\% intervals apply to the inspected validation split. GeoGate processes the full sequence through L14, so equal retained-token counts do not imply matched cost. Reusing the inspected validation split also precludes independent confirmation of quality preservation. The supplementary reproduction index documents interface checks and missing historical execution sources.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_layer_replay_paired_final.pdf}
+\caption{\textbf{LLaVA-3D shared-input layer replay on ScanQA validation.} 4675 questions, 71 scenes, $R=0.10$. (a) Replay EM means with the runner's own native baseline. (b) All eleven L14-versus-comparator effects with frozen 95\% simultaneous scene-clustered max-$t$ intervals. The intervals establish no L14 superiority over native or L15/L16/L18 and do not adjust the historical configuration search. This replay is distinct from the original aggregate curve retained in the supplement.}
+\label{fig:layercurve}
+\end{figure*}
+
+The layer replay supports a late operating region without identifying a unique L14 optimum. Each question in \Cref{fig:layercurve} uses a shared video tensor and expanded embedding. The eleven simultaneous contrasts support L14 advantages over L2/L4/L6/L8/L10/L12/L13, but not over native or L15/L16/L18. L14-minus-native EM is $+0.2995$ $[-0.4100,1.0089]$. The schedule grid gives similar point estimates at 5\%, 10\%, and 20\% retention, without establishing an R10 budget advantage.
+
+\subsection{Token-set relevance and deletion depth}
+\textbf{Selected-set relevance.} Top-attended sets perform better when retained and cause greater damage when deleted in the tested comparisons. On 3D-LLaVA, retaining ten top-attended tokens yields 27.83 EM, versus $23.87\pm0.07$ for random and 23.51 for bottom attention. Deleting the top set gives 23.81 EM, versus $27.79\pm0.12$ and 28.09, respectively. Random results report means and sample standard deviations over three frozen seeds. In LLaVA-3D complete-answer deletion, top deletion incurs an extra 3.49 EM points of loss relative to random deletion at L14. The extra losses are 0.29 at L8 and 0.51 at L20. The own-set L14-minus-L8 and L14-minus-L20 differences are $+3.20$ $[1.80,4.73]$ and $+2.97$ $[1.83,4.22]$ under 97.5\% scene intervals. Each layer selects its own set, so these comparisons vary token identity together with depth.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{LLaVA-3D fixed-set deletion on ScanQA validation.} Complete-answer EM uses 4675 questions/71 scenes and deletes 10\% of spatial tokens. Positive effects indicate greater damage at L14; brackets give frozen 97.5\% scene intervals.}
+\label{tab:fixedset}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Source set & L14 minus L8 & L14 minus L20 \\
+\midrule
+L8  & $-0.26$ $[-0.70,0.19]$ & $+0.15$ $[-0.19,0.51]$ \\
+L14 & $-1.50$ $[-2.29,-0.70]$ & $+2.63$ $[1.60,3.77]$ \\
+L20 & $-1.30$ $[-2.03,-0.59]$ & $+2.16$ $[1.29,3.15]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{Holding token identity fixed.} We apply each deletion set at L8, L14, and L20 with input, prompt, budget, seed, and baseline fixed. These contrasts measure damage relative to native ($D$); the own-set contrasts above use extra damage relative to random deletion ($E$). Their numerical difference cannot isolate a pure token-identity effect. For the L14-derived set, L14 causes 1.50 fewer EM points of damage than L8, with a 97.5\% scene interval of $[-2.29,-0.70]$. The L20-derived set shows the same direction ($-1.30$, $[-2.03,-0.59]$). For both late-derived sets, L14 remains more damaging than L20 (\Cref{tab:fixedset}).
+
+The prespecified location criterion requires at least two source sets to support both L14-over-L8 and L14-over-L20 contrasts; zero of three qualifies. The own-set peak therefore does not identify L14 as a location-specific damage maximum for these sets. The fixed-set ordering still shows that deletion depth affects damage. Deleting the selected 10\% also cannot establish that retaining this set alone is sufficient. Supplementary first-token controls and semantic analyses do not alter these conclusions.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_transfer_effects.pdf}
+\caption{\textbf{Quality beyond the original QA comparisons.} SQA3D uses 3D-LLaVA L14/R10; MMScan uses LLaVA-3D L14/R10. Paired EM changes have marginal two-sided 95\% scene intervals. Both SQA3D folds fail the frozen $-1$-EM non-inferiority rule, and the combined row is not an additional independent test. MMScan tests superiority without a tolerated-loss margin. Horizontal scales differ between panels.}
+\label{fig:transfereffects}
+\end{figure*}
+
+\subsection{Quality across tasks and splits}
+We next assess the transfer of the selected QA operating point. The five-benchmark evaluation includes dense captioning on Scan2Cap~\cite{chen2021scan2cap} and referring on ScanRefer~\cite{chen2020scanrefer} and Multi3DRefer~\cite{zhang2023multi3drefer}.
+\begin{table}[t]
+\centering
+\caption{\textbf{Five-benchmark evaluation on 3D-LLaVA.} L14/R10 unless R=20\% is specified. Full sets use official protocols and beam 1. Scan2Cap CIDEr@0.25 scores all 2068 corpus entries, including 2007 with Mask3D predictions and 61 with empty hypotheses. Deltas are computed before rounding. R10 captioning and Multi3DRefer losses are supported by the reported interval analyses; QA and R20 captioning changes remain unresolved.}
+\label{tab:five}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+Benchmark & Task & Metric & Baseline & GeoGate & $\Delta$ \\
+\midrule
+ScanQA (4675) & QA & EM@1 & 27.87 & 27.83 & $-0.04$ \\
+SQA3D (3519) & QA & EM@1 & 54.82 & 54.90 & $+0.08$ \\
+Scan2Cap (2068) & Dense cap. & CIDEr & 79.36 & 76.50 & $-2.85$ \\
+\hspace{2em} R=20\% & & CIDEr & 79.36 & 79.06 & $-0.30$ \\
+ScanRefer (9508) & Ref. seg. & mIoU & 46.91 & 46.77 & $-0.14$ \\
+Multi3DRefer (11120) & Ref. seg. & mIoU & 52.00 & 51.68 & $-0.32$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The QA point estimates in \Cref{tab:five} do not extend uniformly to other tasks. The supplementary five-endpoint interval table reports R10 QA intervals containing zero. Scan2Cap CIDEr changes by $-2.85$ $[-4.68,-1.11]$ in the original per-endpoint analysis; Multi3DRefer mIoU changes by $-0.32$ $[-0.51,-0.13]$. A separate five-endpoint recomputation finds both decreases significant under post-hoc Holm correction ($p=0.0055$ each), without correcting configuration selection. Its Scan2Cap interval differs from the original interval; the supplement distinguishes these analyses. R20 brings captioning closer to native ($-0.30$, $[-1.53,1.01]$), but the interval still permits a loss and establishes no safe budget. The supplement also reports results for adaptive-onset and unmatched-prompt coverage variants.
+
+\textbf{SQA3D validation.} The fixed 3D-LLaVA L14/R10 configuration fails the quality-preservation test in both frozen folds (\cref{fig:transfereffects}). Together, the folds cover all 3261 validation questions: 1749 questions/35 development-disjoint scenes and 1512 questions/30 development-overlapping scenes. EM changes are $-0.7433$ $[-1.6609,0.1170]$ and $-1.1905$ $[-2.0355,-0.4013]$. Neither fold's one-sided 97.5\% lower bound exceeds the predeclared $-1.0$ EM margin. The combined change of $-0.9506$ $[-1.5610,-0.3511]$ supports a loss under this analysis, but provides no independent-domain confirmation. Post-hoc R20 follow-up leaves both R10 failures unchanged.
+
+\textbf{External 3RScan test.} On MMScan~\cite{lyu2024mmscan}, the shared attention onset persists without an established quality advantage. We evaluate LLaVA-3D on 4934 questions across 234 base scenes using the checkpoint's required 20-frame input. Native and L14/R10 EM are 11.0053\% and 10.9445\%, giving a change of $-0.0608$ $[-0.2980,0.1773]$; CIDEr changes by $-0.2224$ $[-1.6586,1.2359]$. The prespecified superiority criterion requires a positive EM change and a one-sided 97.5\% lower bound above zero. This criterion is not met, and the interval does not establish degradation. Non-inferiority was not tested, and no loss margin was introduced retrospectively. A separate profile meets the shared-onset criteria on these scenes, but post-hoc analysis supports no linear or monotonic profile-to-quality coupling. Thus, persistence of the attention pattern does not provide a validated predictor of pruning quality.
+
+\subsection{From analytical savings to measured speed}
+\begin{table}[t]
+\centering
+\caption{\textbf{LLaVA-3D-7B L14/R10 efficiency on one H100.} Each timed setting covers three full-set sessions. Prompt KV estimates storage at decode initialization; allocation delta excludes resident memory. B2/B4 rates divide real-query count by total generation time. Mixed-B4 rates use inverse median allocated query time, whereas their relative result uses native/GeoGate total time. Application time includes preprocessing, transfer, generation, and decoding.}
+\label{tab:efficiency}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Measure & Baseline & GeoGate & Relative result \\
+\midrule
+\multicolumn{4}{l}{\emph{Analytical estimates}} \\
+LM FLOPs (analytical) & 100\% & 57.9\% & $-42.1\%$ \\
+Prompt KV (MiB/query) & 859 & 185 & $-78.5\%$ \\
+\multicolumn{4}{l}{\emph{Measured allocation and generation core}} \\
+Peak allocation delta (MiB) & 1613 & 1052 & $-34.8\%$ \\
+B1 generation median & 145--160 ms & 135--151 ms & $1.061$--$1.072\times$ \\
+B2 throughput & 5.46--5.55 q/s & 6.06--6.19 q/s & $1.109$--$1.115\times$ \\
+B4 throughput & 6.56--6.68 q/s & 7.69--7.89 q/s & $1.172$--$1.182\times$ \\
+Mixed B4 rate & 5.53--5.65 q/s & 6.05--6.18 q/s & $1.088$--$1.091\times$ \\
+\multicolumn{4}{l}{\emph{Measured application time}} \\
+Application-time reduction & --- & --- & 0.8--1.4\% \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+Measured application-time savings are much smaller than the analytical LM reduction (\Cref{tab:efficiency}). Across three H100 sessions, generation-core speedups are $1.061\times$--$1.072\times$, while application time decreases by only 0.8--1.4\%. Each B1 session alternates native and GeoGate on identical GPU-resident RGB-D tensors, with CUDA synchronization around generation. Application time covers preprocessing, transfer, generation, and decoding, but not an end-to-end serving system. The same timing runner yields EM changes of $+0.19$ to $+0.28$ and CIDEr changes of $-0.42$ to $-0.61$. All corresponding scene intervals contain zero; this alone does not establish quality equivalence.
+
+Batching improves generation-core throughput by 10.9--11.5\% for same-scene B2 and 17.2--18.2\% for B4; mixed-scene B4 gains are 8.8--9.1\%. Excluding questions with variable outputs gives 8.8--9.2\% gains from recorded batch-time allocations, without rerunning a smaller workload. The mixed-B4 scene bootstrap reweights timings shared across scenes; its coverage under shared-batch and between-session variation remains unvalidated. These workload-specific ratios do not establish general serving-system speedups. The supplement documents output variability, the post-hoc exclusion diagnostic, and original decision criteria.
+
+\textbf{Scope of the quality--cost evidence.} A joint measured comparison requires complete native/official-3DZip/GeoGate sessions with answers and preparation-plus-generation timing, including vision/compression and selection/cache work. The existing separate comparisons cannot form a measured Pareto point. Independent quality preservation requires evaluation beyond the inspected splits. The supplement details the planned OpenEQA-HM3D test~\cite{majumdar2024openeqa}, its frozen scoring endpoint, and unmet asset requirements.

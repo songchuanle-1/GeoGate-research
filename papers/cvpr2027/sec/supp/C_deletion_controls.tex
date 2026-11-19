@@ -1,0 +1,159 @@
+\section{Token-set relevance and deletion location}
+\label{sec:supp_functional}
+We assess selected-set relevance while distinguishing token identity from deletion depth. Complete-answer own-set deletion on LLaVA-3D establishes the initial comparison; fixed-set deletion then tests its depth interpretation. Retention tests, first-token responses, and diagnostic analyses provide complementary evidence.
+
+
+\subsection{Intervention effects and interval conventions}
+\label{sec:supp_damage}
+
+We distinguish deletion damage, extra damage relative to random deletion, and cross-layer differences. Let $Q_i^0$ be the native score for question $i$, and $Q_i(S,\ell)$ its score after deleting set $S$ at layer $\ell$. The basic deletion damage is
+\begin{equation}
+D_i(S,\ell)=Q_i^0-Q_i(S,\ell).
+\end{equation}
+For first-token tests, $Q_i$ is the log probability of the native argmax answer token. For complete-answer tests, it is EM on the 0--100 scale or the per-query CIDEr contribution with the reference corpus fixed. The additional damage of the top-attended set relative to the frozen random sets is
+\begin{equation}
+E_i(\ell)=D_i(S_{\ell}^{\rm top},\ell)
+-\frac{1}{3}\sum_{r=1}^{3}D_i(S_{\ell,r}^{\rm random},\ell).
+\end{equation}
+Thus, positive extra EM damage equals random-deletion EM minus top-deletion EM. Own-set cross-layer contrasts compare $E_i(14)$ with $E_i(8)$ or $E_i(20)$; token identities can differ across layers. The fixed-set control instead holds one source set $S_s$ constant and compares $D_i(S_s,14)$ with $D_i(S_s,8)$ or $D_i(S_s,20)$. Because these contrasts use basic damage $D$ rather than random-adjusted extra damage $E$, subtracting the two contrast estimates does not isolate the contribution of token identity. Retention tests compare retained-set quality directly and do not follow from deletion damage alone.
+
+Intervention contrasts use two-sided central 97.5\% scene-bootstrap intervals, following \cref{sec:supp_statistics}. Supporting within-layer effects use 95\% intervals where stated. Random-arm $\pm$ values are sample standard deviations across the three recorded rankings.
+
+\subsection{LLaVA-3D complete-answer deletion}
+Complete-answer deletion tests whether each layer's top-attended set matters more than matched random or bottom-attention sets. The evaluation covers 4,675 questions from 71 scenes under 16 conditions. All arms share prepared multimodal inputs and preserve text tokens, one-token decode updates, and monotonic KV growth at every layer. \Cref{tab:supp_generation} reports the answer-level effects.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Complete-answer deletion on LLaVA-3D ScanQA. Extra damage is mean random-deletion score minus top-deletion score, expressed in EM points or CIDEr score points.}
+\label{tab:supp_generation}
+\begin{tabular}{lccccc}
+\toprule
+Layer & Top EM & Random EM & Bottom EM & Extra EM damage & Extra CIDEr damage \\
+\midrule
+L8 & 27.04 & 27.32 & 27.36 & 0.29 & 1.21 \\
+L14 & 23.87 & 27.36 & 27.29 & 3.49 & 10.52 \\
+L20 & 26.87 & 27.38 & 27.38 & 0.51 & 2.59 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+For the previously selected L14/10\% configuration, both prespecified cross-layer damage contrasts are positive. L14-minus-L8 and L14-minus-L20 are 3.20 [1.80, 4.73] and 2.97 [1.83, 4.22] EM points, respectively, with 97.5\% scene-clustered intervals. The supporting L14 top-minus-bottom contrast is 3.42 [2.31, 4.59], with a 95\% interval. CIDEr shows the same ordering. These results support selected-set relevance without establishing individual-token causality.
+
+\subsection{Fixed-token-set cross-layer control}
+\label{sec:supp_fixed_control}
+The own-set comparison changes token identities together with deletion depth. The fixed-set control varies deletion depth while holding token identity constant. Each source layer's top-attention set is replayed at L8, L14, and L20. It matches the complete-answer runner's 4,675 questions, 71 scenes, prepared inputs, baseline, prompt, deletion budget, and seed. Unpruned outputs reproduce the complete-answer baseline exactly. The prespecified rule requires both L14-over-L8 and L14-over-L20 EM-damage contrasts to have 97.5\% scene-bootstrap lower bounds above zero. At least two of the three source sets must meet both conditions.
+
+\begin{table}[t]
+\centering
+\caption{Fixed-token-set cross-layer deletion on LLaVA-3D. Basic damage is native minus deletion-condition EM. Each contrast holds the source set fixed; positive values indicate greater damage at L14. Brackets are two-sided central 97.5\% scene-bootstrap intervals.}
+\label{tab:supp_fixed_set}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Source set & L14 minus L8 & L14 minus L20 \\
+\midrule
+L8  & $-0.26$ $[-0.70,0.19]$ & $+0.15$ $[-0.19,0.51]$ \\
+L14 & $-1.50$ $[-2.29,-0.70]$ & $+2.63$ $[1.60,3.77]$ \\
+L20 & $-1.30$ $[-2.03,-0.59]$ & $+2.16$ $[1.29,3.15]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+For both late-derived source sets, damage decreases from L8 to L14 to L20 (\Cref{tab:supp_fixed_set}). Neither contrast is resolved for the L8-derived set. Zero of three source sets supports both required directions, so the prespecified criterion is not met.
+
+These results do not support L14 as a location-specific damage maximum for the late-derived sets. They retain evidence that deletion depth matters in these comparisons, while limiting a location-only explanation of the own-set L14 peak. The own-set contrasts use extra damage $E$; the fixed-set contrasts use basic damage $D$ (\cref{sec:supp_damage}). Their numerical difference is not a pure token-identity effect. Neither set-level intervention establishes individual-token causality or the sufficiency of retaining only the selected 10\%.
+
+A secondary balanced factorial decomposition summarizes variation across the same nine cell means. Source-set identity accounts for $49.9\%$ of between-cell variation (95\% scene-bootstrap interval $[37.9,59.6]$), prune layer for $36.4\%$ $[28.0,46.7]$, and their interaction residual for $13.7\%$ $[10.5,17.9]$. These shares describe the nine-cell mean matrix, not causal contributions to question-level error. The interaction share is a ratio of squared residuals and is nonnegative by construction. Its positive percentile interval therefore does not test a zero-interaction null. Such inference would require signed interaction contrasts or a null-calibrated joint test, with appropriate comparison-family correction. We use this post-hoc decomposition descriptively, without a significance or causal-attribution claim. It cannot alter the failed prespecified L14-location gate or establish an L14-specific damage maximum.
+
+\subsection{3D-LLaVA retention and deletion}
+Bidirectional interventions test selected-set relevance in 3D-LLaVA's 100 superpoint tokens. At L14, retaining ten top-attended tokens gives higher scores than random or bottom retention. Deleting that set causes more damage than deleting either control (\Cref{tab:supp_bidir}). Random-control values report means and sample standard deviations over seeds 101, 202, and 303. The retention arm removes the other 90 tokens; the deletion arm keeps them. These complementary interventions therefore test different questions: deletion relevance does not establish retention sufficiency or equivalence to unpruned generation.
+
+\begin{table}[t]
+\centering
+\caption{Bidirectional L14 intervention on 3D-LLaVA ScanQA.}
+\label{tab:supp_bidir}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{Retain 10} & \multicolumn{2}{c}{Delete 10} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Set & EM@1 & CIDEr & EM@1 & CIDEr \\
+\midrule
+Top attention & 27.83 & 90.42 & 23.81 & 78.95 \\
+Random & $23.87\pm0.07$ & $78.52\pm0.73$ &
+         $27.79\pm0.12$ & $89.36\pm0.39$ \\
+Bottom attention & 23.51 & 78.12 & 28.09 & 90.16 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The separate frozen cross-layer runner confirms higher scores for top retention at all three layers (\Cref{tab:supp_stage}). L14 has the largest deletion-damage point estimate, but its retention contrast against L8 is unresolved at the prespecified level. The two intervention directions therefore do not uniquely identify L14 in every comparison.
+
+Question-level results show stronger agreement for L14 versus L20. L14-minus-L20 is positive in both frozen directions: deletion damage is 2.62 [1.66, 3.59] and retention gain is 2.92 [1.90, 4.07], with 97.5\% scene-clustered intervals. Among 229 questions with nonzero effects in both directions, 150 favor L14 in both and 52 favor L20 in both. Thus, 202/229 (88.2\%) pairs agree in sign. The remaining 11 pairs favor L14 only under deletion, and 16 only under retention. Scene-bootstrap Pearson and Spearman correlations are 0.430 [0.371, 0.484] and 0.375 [0.319, 0.429]. L14-minus-L8 is positive under deletion, 1.71 [0.52, 2.99], but unresolved under retention, 1.04 $[-0.15, 2.21]$. We therefore distinguish the cross-direction L14-versus-L20 result from the deletion-only L14-versus-L8 result. Both runs reuse the inspected ScanQA validation split and provide complementary controls, not independent replications.
+
+
+
+\begin{table*}[t]
+\centering
+\caption{Cross-layer retention and deletion on 3D-LLaVA. Random arms average three frozen seeds.}
+\label{tab:supp_stage}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{3}{c}{Retain 10} & \multicolumn{3}{c}{Delete 10} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Layer & Top & Random & Bottom & Top & Random & Bottom \\
+\midrule
+L8 & 25.28 & 22.28 & 21.37 & 25.71 & 28.04 & 28.04 \\
+L14 & 27.81 & 23.76 & 23.53 & 23.89 & 27.93 & 28.11 \\
+L20 & 27.76 & 26.64 & 26.12 & 26.57 & 27.99 & 28.09 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{LLaVA-3D first-token response}
+A separate label-free endpoint measures the first answer token's response to deletion, complementing the complete-answer analysis. Damage measures the decrease in the native baseline argmax token's log probability after deleting a matched 10\% spatial-token set. \Cref{tab:supp_firsttoken} reports the difference between top-attention and random deletion damage.
+
+\begin{table}[t]
+\centering
+\caption{First-token extra deletion damage on LLaVA-3D ScanQA: top-attention minus mean random-control damage, in log-probability units. Intervals are two-sided central 95\% scene-bootstrap intervals.}
+\label{tab:supp_firsttoken}
+\begin{tabular}{lcc}
+\toprule
+Layer & Extra log-prob. damage & Scene 95\% CI \\
+\midrule
+L8 & 0.029 & [0.016, 0.044] \\
+L14 & 0.280 & [0.241, 0.324] \\
+L20 & 0.064 & [0.053, 0.077] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both prespecified cross-layer contrasts are positive under 97.5\% scene intervals: L14-minus-L8 is 0.251 [0.212, 0.296], and L14-minus-L20 is 0.216 [0.180, 0.257]. The supporting L14 top-minus-bottom contrast is 0.282 [0.242, 0.326], with a 95\% interval. Argmax flips, margin damage, Jensen--Shannon divergence, and final-prompt hidden-state displacement show the same ordering. Because native and intervention arms use different forward paths, we interpret within-layer top-minus-control effects and their cross-layer differences.
+
+The first-token and complete-answer runners share baseline, top-attention, and bottom-attention token sets for all 4,675 questions at all three layers. Random controls use separate frozen namespaces, so we do not pool their draws across endpoints. Mean Jaccard overlap between top-deleted sets is 0.207 [0.200, 0.215] for L8--L14, 0.417 [0.408, 0.426] for L14--L20, and 0.200 [0.192, 0.209] for L8--L20. Deterministic contrasts thus share inputs across endpoints, but selected sets differ across layers. Cross-layer deletion alone cannot separate pruning depth from token-set identity; \Cref{sec:supp_fixed_control} tests this confound with fixed token sets.
+
+\subsection{Token-set overlap diagnostics}
+We next stratify questions by deletion-set overlap to assess whether the layer contrasts persist when compared sets are most similar. Within the highest-overlap quartile, L14-minus-L8 complete-answer damage is $0.998$ EM points, with an exploratory 95\% scene interval $[-0.919,2.929]$ crossing zero. L14-minus-L20 remains positive at $4.277$ EM points $[2.415,6.343]$. Neither contrast varies monotonically across overlap quartiles. Because this post-hoc stratification uses the inspected split, it remains descriptive rather than causal. It provides weaker depth evidence for L14 versus L8 than for L14 versus L20.
+
+Post-hoc overlap stratification shows the same limitation in the 3D-LLaVA deletion endpoint. Within the highest-overlap quartile (1,169 questions), L14-minus-L8 falls to 0.94 EM points, with an exploratory 95\% scene interval $[-1.35,3.32]$ crossing zero. L14-minus-L20 remains positive at 2.88 EM points $[1.11,4.63]$. Conditioning on token-set similarity therefore weakens the L14-versus-L8 evidence on this inspected split. This descriptive stratification does not provide a causal decomposition or replace the fixed-token-set control.
+
+\subsection{Question dependence and semantic alignment}
+The original-condition 200-question profile also permits a label-free comparison of top-10\% token sets across questions. At L14, mean Jaccard overlap is 0.245 [0.216, 0.274] within ScanQA scenes, versus 0.035 [0.033, 0.036] across scenes and an independent-subset chance mean of 0.053. Selected sets therefore contain a scene-linked component, while within-scene overlap remains far below one. However, visual embeddings are not hash-identical across all questions within each scene. This comparison cannot separate scene identity from frame sampling or question-conditioned processing, nor establish question-invariant anchors or an attention-sink mechanism.
+
+The shared-input complete-answer run controls this visual-sampling confound. Across 4,675 questions in 71 scenes, each scene reuses identical raw RGB-D tensor hashes and a shared deterministic-cap fingerprint. L14 sets still vary substantially across questions within a scene: mean pairwise Jaccard overlap is 0.206 [0.196, 0.217], compared with 0.719 [0.704, 0.733] at L8 and 0.293 [0.279, 0.308] at L20. The independent-subset chance mean is 0.053. Under fixed scene inputs and cap choices, selection therefore contains a question-conditioned component rather than a single fixed anchor. This structural result does not establish semantic correctness, causal necessity, or a phenomenon unique to 3D inputs.
+
+A voxel-to-label analysis tests semantic alignment with scene instances using the same 71 scenes and 4,675 frozen v15 questions. We map selected voxels to released ScanNet points through a fixed inverse axis-alignment transform and a 0.25 m radius. Mapping coverage is usable: the median mapped-token fraction is 0.9354 and median voxel-label purity is 0.9476. Nevertheless, the prespecified primary contrast fails. The L14 top-minus-random difference in instance foreground fraction is $-0.0070$, with a 95\% scene-clustered interval $[-0.0148,0.0007]$. The secondary labeled-semantic-presence difference is $+0.0241$ $[0.0117,0.0369]$ and cannot override that failure. We therefore retain selected-set relevance without claiming semantic identity or correctness, individual-token causality, or uniqueness to 3D inputs.
+
+\subsection{Own-set robustness diagnostics}
+These diagnostics assess the stability of the v15 own-set contrasts on the inspected split. They are separate from the v21 fixed-set analysis and do not alter its failed location criterion.
+
+\paragraph{Scene and question-type variation.} Scene-level analysis shows that the own-set effects are not concentrated in a single observed scene. We recompute frozen v15 contrasts after subtracting each layer's three-seed random-control mean. L14 has greater extra damage than L8 in 47 of 71 scene means and than L20 in 49 of 71. The respective comparators lead in 16 and 14 scenes, with eight ties in each comparison. All 71 leave-one-scene-out estimates remain positive: 2.96--3.38 EM points for L14-minus-L8 and 2.79--3.14 for L14-minus-L20. Exact sign tests over discordant questions yield two-sided $p=1.19\times10^{-13}$ and $p=3.11\times10^{-13}$. These robustness results remain conditional on the inspected ScanQA validation split.
+
+Exploratory question-type analysis finds positive contrasts across several categories, rather than a single heuristic type. With 95\% scene-clustered intervals, L14-minus-L8 extra damage is 2.78 [1.50, 4.17] EM points for spatial, 9.25 [4.47, 14.53] for color, and 2.80 [0.59, 4.85] for object questions. L14-minus-L20 gives 2.49 [1.25, 3.77], 9.82 [5.98, 14.09], and 2.09 [0.38, 3.80] for the same categories. Counting questions give $-0.88$ $[-4.82, 2.54]$ and $-0.29$ $[-2.45, 2.16]$; the residual ``other'' category also has intervals crossing zero. This post-hoc analysis uses imbalanced categories and provides neither a new prespecified test family nor independent confirmation.
+
+A stricter descriptive comparison counts cases where the baseline is correct, top deletion is wrong, and at least two of three fixed random deletions remain correct. It yields 63, 273, and 106 cases at L8, L14, and L20, respectively. L14 has the largest count, but cases are selected post hoc from inspected validation. The counts therefore provide neither prevalence estimates nor causal token analysis.
+
+\paragraph{Agreement across endpoints.} The two functional endpoints also agree in direction when paired across the same 4,675 questions. L14-minus-L8 is $0.2513$ $[0.2169,0.2898]$ in first-token log-probability damage and $3.20$ $[1.96,4.49]$ EM points in complete-answer damage. L14-minus-L20 is $0.2159$ $[0.1837,0.2512]$ and $2.97$ $[1.98,4.07]$, respectively. Among questions with nonzero effects in both endpoints, signs agree in 68.5\% and 69.1\% of cases. Scene-bootstrap Pearson correlations are $0.187$ $[0.113,0.268]$ and $0.187$ $[0.118,0.262]$. These zero-inflated question-level statistics support consistency across readouts, not individual-token causality or a complete decoding mechanism. Because the v21 fixed-token-set control does not reproduce both location contrasts for any source set, these results do not isolate an L14-specific maximum caused by deletion location alone.
+
+\paragraph{Restricted layer-selection stability.} Nested scene-level selection assesses the stability of choosing L14. For each held-out scene, we select among three frozen candidate layers using the other 70 scenes, then evaluate that choice on the held-out scene. The first-token endpoint chooses L14 in 71/71 folds, with held-out damage $0.2800$ $[0.2405,0.3235]$. The complete-answer endpoint also chooses L14 in 71/71 folds, with $3.4866$ $[2.3567,4.6825]$ EM points of damage. Both endpoints select the same layer and agree on all three pairwise layer orderings in 71/71 folds. Candidate layers remain restricted to L8/L14/L20. This restricted candidate comparison does not establish a universal onset.

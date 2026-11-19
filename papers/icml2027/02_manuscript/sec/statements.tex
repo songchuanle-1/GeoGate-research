@@ -1,0 +1,5 @@
+\section*{Impact Statement}
+Pruning spatial tokens can lower the memory needed to answer questions about a 3D scene. It can also remove details needed to describe or locate an object: the same pruning budget that performed well on ScanQA reduced captioning and multi-object referring scores. Applications that rely on these details should validate the pruning budget on their own tasks. We measured application time on one GPU, but did not measure energy use; the reported reduction in model FLOPs therefore cannot quantify an environmental benefit.
+
+\section*{AI Disclosure Statement}
+OpenAI Codex assisted with manuscript revision, the organization of the appendix, and figure preparation. Numerical comparisons in the abstract were checked against the results in the paper. For Figure~\ref{fig:threephase}, every plotted value was checked against the archived layer profiles; the other five figure PDFs were matched to archived exports by file hash. These checks did not rerun model inference.

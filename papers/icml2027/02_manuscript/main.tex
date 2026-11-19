@@ -1,0 +1,36 @@
+% GeoGate | ICML 2027 anonymous review manuscript.
+\documentclass{article}
+\usepackage{microtype,graphicx,booktabs,array}
+\usepackage{hyperref}
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\usepackage{icml2027}
+\usepackage{amsmath,amssymb}
+\usepackage[capitalize,noabbrev]{cleveref}
+\graphicspath{{figures/}}
+\icmltitlerunning{GeoGate: Evaluating Late-Layer Token Pruning in 3D Large Multimodal Models}
+\begin{document}
+\twocolumn[
+  \icmltitle{GeoGate: Evaluating Late-Layer Token Pruning in 3D Large Multimodal Models}
+  \begin{icmlauthorlist}
+    \icmlauthor{Anonymous Authors}{anon}
+  \end{icmlauthorlist}
+  \icmlaffiliation{anon}{Anonymous Institution}
+  \icmlcorrespondingauthor{Anonymous Author}{anon.email@domain.com}
+  \icmlkeywords{multimodal models, 3D scene understanding, token pruning, efficient inference}
+  \vskip 0.3in
+]
+\printAffiliationsAndNotice{}
+
+\input{sec/0_abstract}
+\input{sec/1_intro}
+\input{sec/2_related_work}
+\input{sec/3_attention_analysis}
+\input{sec/4_method}
+\input{sec/5_experiments}
+\input{sec/6_conclusion}
+
+\input{sec/statements}
+\bibliography{main}
+\bibliographystyle{icml2027}
+\input{sec/X_suppl}
+\end{document}

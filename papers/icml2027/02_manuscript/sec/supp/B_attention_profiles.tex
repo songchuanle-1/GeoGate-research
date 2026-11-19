@@ -1,0 +1,76 @@
+\section{Attention Profiles and Stability}
+\label{sec:supp_profiles}
+
+We examine whether the observed attention pattern persists across samples and prompts. These analyses characterize attention allocation; separate retention experiments assess its relevance to pruning quality.
+
+\paragraph{Attention-statistic definitions.} Spatial attention mass and half-mass coverage use the last-prompt query row of head-averaged prefill attention. Received-attention Gini instead sums all prefill query rows for each spatial key before sorting the keys. Its denominator includes the frozen $10^{-9}$ stabilization term. For each sample, heads are averaged before computing these statistics; sample-level statistics are then averaged at each layer. Gini therefore measures inequality in all-query received attention, which need not track concentration in the last-prompt readout.
+
+
+
+\subsection{Late-Layer Summary Statistics}
+\Cref{tab:supp_profile_statistics} reports aggregate 50-scene profiles separately from question-level profiles. Aggregate entries are ranges of L14--L26 layer means, rather than uncertainty intervals. Question-level entries first average each question over L14--L26, then use a scene-cluster bootstrap to obtain a 95\% interval over questions. Half-mass coverage is the spatial-token fraction covering 50\% of a layer's last-prompt spatial attention mass.
+
+\begin{table*}[t]
+\centering
+\small
+\caption{Frozen spatial-attention statistics for L14--L26. Aggregate rows report layer-mean ranges; question rows report question-level phase means with scene-cluster 95\% intervals.}
+\label{tab:supp_profile_statistics}
+\begin{tabular}{lcccc}
+\toprule
+Profile & Items & Late attention & Half-mass coverage & Tokens \\
+\midrule
+LLaVA-3D, 50 scenes & 50 & 7.58--23.02\% & 2.21--5.76\% & 33.2--86.3 \\
+3D-LLaVA, 50 scenes & 50 & 4.73--14.29\% & 4.68--11.58\% & 4.7--11.6 \\
+LLaVA-3D, 200 q. & 200/67 & 15.21 [14.33,16.10]\% &
+3.97 [3.71,4.23]\% & 55.7 [49.4,62.1] \\
+3D-LLaVA, 71 scenes & 71/71 & 9.70 [8.69,10.72]\% &
+5.81 [5.21,6.44]\% & 5.8 [5.2,6.4] \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The 50-scene and question-level profiles use different samples, so their ranges cannot be pooled. These intervals characterize the inspected profiles without establishing a universal layer or mechanism.
+
+\subsection{Prompt Perturbations}
+The L14 readout resurgence persists under the tested answer-format changes. We use the frozen 200-question profile across 67 scenes with three prompts: the original, removal of its suffix, and the paraphrase ``Give a short answer.'' \Cref{tab:supp_prompt} reports scene-clustered bootstrap intervals. The L14--L13 attention jump remains positive for all three prompts, and the retained top-10\% set at L14 strongly overlaps the original-prompt set. This supports directional stability under two fixed perturbations, without establishing invariance to arbitrary prompts.
+
+\begin{table}[t]
+\centering
+\caption{Prompt perturbation of the L14 readout profile.}
+\label{tab:supp_prompt}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Prompt & L14--L13 jump (95\% CI) & Top-set overlap (95\% CI) \\
+\midrule
+Original & 10.56 [9.77, 11.36] & 1.000 \\
+No suffix & 5.08 [4.33, 5.82] & 0.892 [0.887, 0.898] \\
+Paraphrased suffix & 9.11 [8.36, 9.86] & 0.952 [0.948, 0.955] \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\subsection{Profile-Derived Onset Rule}
+A retrospective label-free rule identifies a stable onset in the model-level mean profiles. Using the recorded per-sample profiles, it scans L2--L31 and takes the late peak over L14--L26. It selects the first layer in L2--L31 whose mean last-prompt-to-spatial attention reaches 50\% of that peak. The rule selects L14 in both architectures. Recomputing the mean curve while leaving out each scene still selects L14 in 67/67 LLaVA-3D scenes and 71/71 3D-LLaVA scenes. A 10,000-draw scene bootstrap also selects L14 in 10,000/10,000 resamples for both profiles.
+
+The late peaks occur at L24 and L21, so the rule identifies an onset rather than the maximum. Threshold sensitivity remains descriptive: 30\% selects L9 and L11, 40--60\% selects L14 in both profiles, and 70\% selects L14 and L17. Per-question selections vary across layers. The result therefore supports a reproducible model-level heuristic, without per-question adaptivity or a universal L14 boundary. The reference peak window and threshold were chosen after profile inspection, so phase discovery is not independent.
+
+\subsection{Question-Type Coverage}
+Spatial, counting, and residual ``other'' questions have wider mean readout sets than color questions in the frozen 200-question LLaVA-3D profile (\Cref{tab:supp_qtype}). This pattern is descriptive: counting has only ten examples, and full-set correctness analysis shows no corresponding concentration of GeoGate errors.
+
+\begin{table}[t]
+\centering
+\caption{LLaVA-3D readout coverage by ScanQA question type.}
+\label{tab:supp_qtype}
+\begin{tabular}{lcc}
+\toprule
+Type & Questions & Top-50 coverage \\
+\midrule
+Color & 36 & 2.53\% \\
+What-object & 45 & 3.46\% \\
+Spatial relations & 88 & 4.55\% \\
+Counting & 10 & 4.06\% \\
+Other & 21 & 5.02\% \\
+\bottomrule
+\end{tabular}
+\end{table}
