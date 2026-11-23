@@ -6,21 +6,17 @@ We evaluate LLaVA-3D-7B and 3D-LLaVA-7B-LoRA on one H100 80GB. QA uses greedy de
 \begin{table}[t]
 \centering
 \small
-\caption{\textbf{Questions and supporting evidence.} Each comparison addresses the scientific question shown in its row.}
+\caption{\textbf{What each comparison tests.}}
 \label{tab:evidence_map}
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}p{0.24\columnwidth}p{0.71\columnwidth}@{}}
 \toprule
-Question & Evidence and boundary \\
+Question & Comparison \\
 \midrule
-Pattern & Profiles (\cref{fig:threephase}); persistence does not
-certify preservation. \\
-Set relevance & Retention/deletion controls; the fixed-set location
-gate fails (\Cref{tab:fixedset}). \\
-Quality & Runner-matched comparisons and transfer
-(\Crefrange{tab:scanqa}{tab:five}); independent preservation remains open. \\
-Cost & Analytical and timed results (\Cref{tab:efficiency});
-joint measured comparison with official 3DZip remains open. \\
+Deletion depth & Same token set removed at three layers (\cref{tab:fixedset}). \\
+Retention & Early vs.\ late at matched analytical LM cost (\cref{tab:costmatched}). \\
+Transfer & Fixed schedule vs.\ native, not early pruning (\cref{fig:transfereffects}). \\
+Timing & GeoGate vs.\ native on one H100 (\cref{tab:efficiency}). \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -31,7 +27,30 @@ Each comparison uses a matched native (unpruned) baseline from the same runner, 
 
 We report exact match (EM@1), consensus-based image description evaluation (CIDEr)~\citep{vedantam2015cider}, and mean intersection over union (mIoU). EM and mIoU use 0--100 scales; CIDEr differences use score points. For quality differences, the scene bootstrap resamples scenes with replacement, preserves paired questions, and computes a question-weighted mean. Reference-corpus inverse document frequency (IDF) remains fixed during CIDEr resampling. An interval containing zero does not by itself establish equivalence or non-inferiority; either claim requires a prespecified margin and an appropriate decision rule. Prespecified contrasts remain conditional on configuration selection; local max-$t$ corrections do not cover the historical search. Scene-ID checks find no overlap between the released-860K mixture and the ScanQA/SQA3D splits used here. The release lacks a complete historical training manifest.
 
-\subsection{Quality under Controlled Comparisons}
+\subsection{Token Selection and Deletion Depth}
+\textbf{When each layer selects its own set.} On LLaVA-3D ScanQA validation, we delete the highest-attention 10\% of spatial tokens at L8, L14, or L20 and score the complete answer. Relative to random deletion at the same layer, top-set deletion costs an extra 0.29, 3.49, and 0.51 EM points, respectively. The L14-minus-L8 and L14-minus-L20 contrasts are $+3.20$ $[1.80,4.73]$ and $+2.97$ $[1.83,4.22]$ (97.5\% scene intervals). L14 has the largest excess loss, but each layer deletes different tokens.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{Same tokens, different deletion depths.} On LLaVA-3D ScanQA validation (4675 questions, 71 scenes), each row fixes the top 10\% of spatial tokens from one source layer. Entries compare EM loss relative to native: positive values mean greater loss at L14. Brackets give 97.5\% scene intervals.}
+\label{tab:fixedset}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcc}
+\toprule
+Source set & L14 minus L8 & L14 minus L20 \\
+\midrule
+L8  & $-0.26$ $[-0.70,0.19]$ & $+0.15$ $[-0.19,0.51]$ \\
+L14 & $-1.50$ $[-2.29,-0.70]$ & $+2.63$ $[1.60,3.77]$ \\
+L20 & $-1.30$ $[-2.03,-0.59]$ & $+2.16$ $[1.29,3.15]$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\textbf{When token identity stays fixed.} We delete each source set at all three depths, holding the input, prompt, budget, seed, and native baseline fixed (\cref{tab:fixedset}). For the L14-selected set, deleting at L8 rather than L14 costs a further 1.50 EM points. The L20-selected set shows the same ordering (1.30 points). For both sets, deleting at L14 also hurts more than deleting at L20. Neither contrast is resolved for the L8-selected set. The prespecified criterion required L14 to cause greater damage than both other depths for at least two source sets; none qualifies. Thus deletion depth matters, but the peak under layer-specific selection does not identify L14 as the most damaging location. Fixed-set damage is measured against native, whereas the preceding contrasts measure excess damage over random deletion; subtracting them would not isolate a token-identity effect.
+
+\textbf{Deleting a set is not the same as retaining it.} Deleting the top 10\% tests what is lost; it does not test whether the same 10\% suffices on its own. On 3D-LLaVA we test both directions at L14. Keeping ten top-ranked tokens gives 27.83 EM, versus $23.87\pm0.07$ for random and 23.51 for bottom-ranked tokens. Deleting those ten gives 23.81 EM, versus $27.79\pm0.12$ and 28.09, respectively (random: mean and sample standard deviation over three frozen seeds). This comparison favors the top-ranked set over those controls at L14; it does not compare a fixed retained set across depths.
+
+\subsection{Retention at Matched Cost or Token Count}
 \begin{table}[t]
 \centering
 \caption{\textbf{LLaVA-3D ScanQA validation schedule grid.} All 4675 questions are evaluated; GeoGate uses L14/R10. KV and FLOPs estimate LM cost, not total memory or latency.}
@@ -67,7 +86,16 @@ L8 cost matched & 491.79 & 26.87 & 92.27 \\
 \end{tabular}}
 \end{table}
 
-The shared-embedding controls favor the selected late setting at matched analytical LM cost (\Cref{tab:costmatched}). L14-over-L2 and L14-over-L8 EM differences are 1.22 $[0.42,2.12]$ and 1.03 $[0.24,1.85]$, with prespecified 97.5\% scene intervals. Analytical matching does not imply matched measured latency.
+On the LLaVA-3D ScanQA validation split used for selection, L14/128 outperforms L2 and L8 at matched analytical LM cost (\cref{tab:costmatched}). The early schedules retain about 700 and 492 spatial tokens on average, respectively. With shared input embeddings, L14 leads by 1.22 EM points over L2 $[0.42,2.12]$ and 1.03 over L8 $[0.24,1.85]$ (prespecified 97.5\% scene intervals). The budgets match estimated computation, not measured latency.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_layer_replay_paired_final.pdf}
+\caption{\textbf{LLaVA-3D shared-input layer replay on ScanQA validation.} 4675 questions, 71 scenes, $R=0.10$. (a) Replay EM means with the runner's own native baseline. (b) All eleven L14-versus-comparator effects with frozen 95\% simultaneous scene-clustered max-$t$ intervals. These intervals cover the stated contrasts, not the historical configuration search. The original aggregate curve is reported separately in the supplement.}
+\label{fig:layercurve}
+\end{figure*}
+
+Fixing the \emph{retention fraction} instead of the analytical cost answers a different question (\cref{fig:layercurve}). At 10\% retention on shared inputs, L14 exceeds L2/L4/L6/L8/L10/L12/L13, but the simultaneous contrasts do not distinguish L14 from L15/L16/L18 or from native (L14 minus native: $+0.2995$ EM $[-0.4100,1.0089]$). The evidence favors a late range over the specified early settings, not a unique optimum. The schedule grid likewise shows no resolved advantage for the 10\% budget over 5\% or 20\%.
 
 \begin{table}[t]
 \centering
@@ -85,39 +113,7 @@ Official 3DZip & 128 & 25.05 & 86.02 \\
 \end{tabular}}
 \end{table}
 
-At 128 retained tokens, GeoGate achieves higher ScanQA quality than official 3DZip under the matched-input protocol (\Cref{tab:official128}). Official 3DZip commit \texttt{2fec4a5} and GeoGate share RGB-D tensors, prompt, per-query seed, and cyclic condition order. Native and GeoGate share the expanded embedding and cap choices. GeoGate-minus-3DZip differences are $+2.91$ EM $[1.96,3.90]$ and $+8.24$ CIDEr $[5.80,10.72]$. Against native, the differences are $+0.73$ EM $[0.22,1.24]$ and $+0.77$ CIDEr $[-0.68,2.23]$. These scene 95\% intervals apply to the inspected validation split. GeoGate processes the full sequence through L14, so equal retained-token counts do not imply matched cost. Reusing the inspected validation split also precludes independent confirmation of quality preservation. The supplementary reproduction index documents interface checks and missing historical execution sources.
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_layer_replay_paired_final.pdf}
-\caption{\textbf{LLaVA-3D shared-input layer replay on ScanQA validation.} 4675 questions, 71 scenes, $R=0.10$. (a) Replay EM means with the runner's own native baseline. (b) All eleven L14-versus-comparator effects with frozen 95\% simultaneous scene-clustered max-$t$ intervals. The intervals establish no L14 superiority over native or L15/L16/L18 and do not adjust the historical configuration search. This replay is distinct from the original aggregate curve retained in the supplement.}
-\label{fig:layercurve}
-\end{figure*}
-
-The layer replay supports a late operating region without identifying a unique L14 optimum. Each question in \Cref{fig:layercurve} uses a shared video tensor and expanded embedding. The eleven simultaneous contrasts support L14 advantages over L2/L4/L6/L8/L10/L12/L13, but not over native or L15/L16/L18. L14-minus-native EM is $+0.2995$ $[-0.4100,1.0089]$. The schedule grid gives similar point estimates at 5\%, 10\%, and 20\% retention, without establishing an R10 budget advantage.
-
-\subsection{Token-Set Relevance and Deletion Depth}
-\textbf{Selected-set relevance.} Top-attended sets perform better when retained and cause greater damage when deleted in the tested comparisons. On 3D-LLaVA, retaining ten top-attended tokens yields 27.83 EM, versus $23.87\pm0.07$ for random and 23.51 for bottom attention. Deleting the top set gives 23.81 EM, versus $27.79\pm0.12$ and 28.09, respectively. Random results report means and sample standard deviations over three frozen seeds. In LLaVA-3D complete-answer deletion, top deletion incurs an extra 3.49 EM points of loss relative to random deletion at L14. The extra losses are 0.29 at L8 and 0.51 at L20. The own-set L14-minus-L8 and L14-minus-L20 differences are $+3.20$ $[1.80,4.73]$ and $+2.97$ $[1.83,4.22]$ under 97.5\% scene intervals. Each layer selects its own set, so these comparisons vary token identity together with depth.
-
-\begin{table}[t]
-\centering
-\caption{\textbf{LLaVA-3D fixed-set deletion on ScanQA validation.} Complete-answer EM uses 4675 questions/71 scenes and deletes 10\% of spatial tokens. Positive effects indicate greater damage at L14; brackets give frozen 97.5\% scene intervals.}
-\label{tab:fixedset}
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{lcc}
-\toprule
-Source set & L14 minus L8 & L14 minus L20 \\
-\midrule
-L8  & $-0.26$ $[-0.70,0.19]$ & $+0.15$ $[-0.19,0.51]$ \\
-L14 & $-1.50$ $[-2.29,-0.70]$ & $+2.63$ $[1.60,3.77]$ \\
-L20 & $-1.30$ $[-2.03,-0.59]$ & $+2.16$ $[1.29,3.15]$ \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\textbf{Holding token identity fixed.} We apply each deletion set at L8, L14, and L20 with input, prompt, budget, seed, and baseline fixed. These contrasts measure damage relative to native ($D$); the own-set contrasts above use extra damage relative to random deletion ($E$). Their numerical difference cannot isolate a pure token-identity effect. For the L14-derived set, L14 causes 1.50 fewer EM points of damage than L8, with a 97.5\% scene interval of $[-2.29,-0.70]$. The L20-derived set shows the same direction ($-1.30$, $[-2.03,-0.59]$). For both late-derived sets, L14 remains more damaging than L20 (\Cref{tab:fixedset}).
-
-The prespecified location criterion requires at least two source sets to support both L14-over-L8 and L14-over-L20 contrasts; zero of three qualifies. The own-set peak therefore does not identify L14 as a location-specific damage maximum for these sets. The fixed-set ordering still shows that deletion depth affects damage. Deleting the selected 10\% also cannot establish that retaining this set alone is sufficient. Supplementary first-token controls and semantic analyses do not alter these conclusions.
+At an equal final count of 128 spatial tokens, GeoGate scores higher than official 3DZip on the inspected ScanQA validation split (\cref{tab:official128}): $+2.91$ EM $[1.96,3.90]$ and $+8.24$ CIDEr $[5.80,10.72]$ (95\% scene intervals). Against native the differences are $+0.73$ EM $[0.22,1.24]$ and $+0.77$ CIDEr $[-0.68,2.23]$. We use official 3DZip commit \texttt{2fec4a5}, identical RGB-D tensors, prompt and per-query seed, and cyclic condition order. Native and GeoGate share the expanded embedding and cap choices. GeoGate still processes the full sequence through L14. This is a quality comparison at equal final token count, not a comparison at equal computation or measured latency. \Cref{sec:supp_repro_index} identifies the available records and the missing historical runner version.
 
 \begin{figure*}[t]
 \centering
@@ -127,7 +123,7 @@ The prespecified location criterion requires at least two source sets to support
 \end{figure*}
 
 \subsection{Quality Across Tasks and Splits}
-We next assess the transfer of the selected QA operating point. The five-benchmark evaluation includes dense captioning on Scan2Cap~\citep{chen2021scan2cap} and referring on ScanRefer~\citep{chen2020scanrefer} and Multi3DRefer~\citep{zhang2023multi3drefer}.
+Here the comparator changes: we test the selected schedule against the unpruned model, not against cost-matched L2 or L8 pruning. These comparisons assess transfer of task quality, not whether the early--late ordering transfers. Beyond QA, the five-benchmark evaluation includes Scan2Cap dense captioning~\citep{chen2021scan2cap} and referring on ScanRefer~\citep{chen2020scanrefer} and Multi3DRefer~\citep{zhang2023multi3drefer}.
 \begin{table}[t]
 \centering
 \caption{\textbf{Five-benchmark evaluation on 3D-LLaVA.} L14/R10 unless R=20\% is specified. Full sets use official protocols and beam 1. Scan2Cap CIDEr@0.25 scores all 2068 corpus entries, including 2007 with Mask3D predictions and 61 with empty hypotheses. Deltas are computed before rounding. R10 captioning and Multi3DRefer losses are supported by the reported interval analyses; QA and R20 captioning changes remain unresolved.}
@@ -151,7 +147,7 @@ The QA point estimates in \Cref{tab:five} do not extend uniformly to other tasks
 
 \textbf{SQA3D validation.} The fixed 3D-LLaVA L14/R10 configuration fails the quality-preservation test in both frozen folds (\cref{fig:transfereffects}). Together, the folds cover all 3261 validation questions: 1749 questions/35 development-disjoint scenes and 1512 questions/30 development-overlapping scenes. EM changes are $-0.7433$ $[-1.6609,0.1170]$ and $-1.1905$ $[-2.0355,-0.4013]$. Neither fold's one-sided 97.5\% lower bound exceeds the predeclared $-1.0$ EM margin. The combined change of $-0.9506$ $[-1.5610,-0.3511]$ supports a loss under this analysis, but provides no independent-domain confirmation. Post-hoc R20 follow-up leaves both R10 failures unchanged.
 
-\textbf{External 3RScan test.} On MMScan~\citep{lyu2024mmscan}, the shared attention onset persists without an established quality advantage. We evaluate LLaVA-3D on 4934 questions across 234 base scenes using the checkpoint's required 20-frame input. Native and L14/R10 EM are 11.0053\% and 10.9445\%, giving a change of $-0.0608$ $[-0.2980,0.1773]$; CIDEr changes by $-0.2224$ $[-1.6586,1.2359]$. The prespecified superiority criterion requires a positive EM change and a one-sided 97.5\% lower bound above zero. This criterion is not met, and the interval does not establish degradation. Non-inferiority was not tested, and no loss margin was introduced retrospectively. A separate profile meets the shared-onset criteria on these scenes, but post-hoc analysis supports no linear or monotonic profile-to-quality coupling. Thus, persistence of the attention pattern does not provide a validated predictor of pruning quality.
+\textbf{External 3RScan test.} On MMScan~\citep{lyu2024mmscan}, the L13-to-L14 attention increase appears in all 234 profiled scenes, but its persistence does not predict a quality advantage. On 4934 questions from those scenes, using the checkpoint's required 20 frames, native and L14/R10 EM are 11.0053\% and 10.9445\%: a change of $-0.0608$ $[-0.2980,0.1773]$. CIDEr changes by $-0.2224$ $[-1.6586,1.2359]$. The EM result fails the prespecified superiority test (positive change and one-sided 97.5\% lower bound above zero); it establishes neither degradation nor non-inferiority. No tolerated-loss margin was specified. Across scenes, post-hoc tests find no supported linear or monotonic association between the attention profiles and quality changes (\cref{sec:supp_coupling}).
 
 \subsection{From Analytical Savings to Measured Speed}
 \begin{table}[t]

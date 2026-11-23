@@ -2,9 +2,12 @@
 
 This private working copy contains the code and the two manuscript formats.
 Start with the [new-device guide (中文)](docs/workstation/START_HERE.md).
-Read the [ICML manuscript](papers/icml2027/01_submission/GeoGate_ICML2027.pdf),
-or the archived CVPR [main paper](papers/cvpr2027/main.pdf) and
-[supplement](papers/cvpr2027/supplement.pdf).
+For the November 22 revision, see the [pending experiments, P1–P4 (中文)](docs/workstation/GeoGate_pending_experiments_zh.md)
+and [revision notes (中文)](docs/workstation/GeoGate_revision_plan_zh.md).
+The [revised ICML manuscript with appendix](papers/icml2027/01_submission/GeoGate_ICML2027.pdf)
+and its [LaTeX source archive](papers/icml2027/01_submission/GeoGate_ICML2027_source_revised.zip)
+are ready to download. The CVPR [main paper](papers/cvpr2027/main.pdf) and
+[supplement](papers/cvpr2027/supplement.pdf) are archived separately.
 
 **Training-free late spatial-token pruning for 3D large multimodal models.**
 

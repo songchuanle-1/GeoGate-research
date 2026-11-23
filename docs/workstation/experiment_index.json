@@ -13,7 +13,9 @@
       "adaptive_token/run_shared_input_quality_v3.py"
     ],
     "Analytical cost-matched QA": [
-      "adaptive_token/run_stage_v4.py"
+      "analysis/freeze_cost_controls_v4.py",
+      "adaptive_token/run_cost_controls_v4.py",
+      "analysis/score_cost_controls_v4.py"
     ],
     "Paired layer replay": [
       "adaptive_token/run_layer_sweep_paired.py",
@@ -64,11 +66,17 @@
       "analysis/audit_sqa3d_error_cases.py"
     ],
     "Blocked independent OpenEQA endpoint": [
+      "analysis/preflight_openeqa_hm3d_v14.py",
       "analysis/run_openeqa_hm3d_v14.py",
-      "adaptive_token/openeqa_hm3d_v14.py"
+      "adaptive_token/openeqa_hm3d_v14.py",
+      "analysis/audit_openeqa_hm3d_v14.py",
+      "analysis/score_openeqa_hm3d_v14.py"
     ]
   },
   "additional_source_sha256": {
+    "analysis/preflight_openeqa_hm3d_v14.py": "93f220403291193440cf40cedd4a525c8f91a677a0c6b37bdd5e2f454cf7cf01",
+    "analysis/audit_openeqa_hm3d_v14.py": "ce623e1a21d1dcc153817f06ff5862a1f5db944e7393ca60d802e63791143abc",
+    "analysis/score_openeqa_hm3d_v14.py": "92c8d249a7795e04fc717582b65a2f686c0a14e97a4a04d64a60a0830fc6a668",
     "adaptive_token/geogate_batch_hetero_v18.py": "1ddbcf1e2976273ac3df56ba3c917fbc97444429cbd20ed2ad4ee4a0a274261f",
     "adaptive_token/geogate_batch_v6.py": "33029fa25433849ec14ca09075dc29c1b5ff3c09059df7cf0ada303001d5da58",
     "adaptive_token/model_multi3drefer_geogate.py": "8689492be09bbc3331d9c572fc97e4db95827adf83db335e84ccdb0145e82ad5",
